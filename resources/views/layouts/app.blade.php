@@ -13,11 +13,44 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <script src="https://kit.fontawesome.com/a21da4aff9.js" crossorigin="anonymous"></script>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 flex">
-          <div>
-            Sidebar
+        <div class="min-h-screen bg-gray-100 flex flex-row text-white min-w-screen">
+          <div class="w-64 bg-black min-h-full p-6 space-y-8">
+           <div>
+            Online Bike Rental System
+           </div>
+
+           <div>
+            <ul>
+                <li>Dashboard</li>
+                <li>Bikes</li>
+                <li>Variants</li>
+                <li>Updates</li>
+                <li>Rents</li>
+
+            </ul>
+           </div>
+          </div>
+          <div class="flex-1 text-black flex flex-col">
+            <div class="h-16 bg-gray-100 shadow-md flex flex-row justify-end items-center p-8 space-x-4">
+                <p>Admin</p>
+                <i class="fa fa-user"></i>
+            </div>
+            <div class="flex-1 p-6">
+             
+                @yield('content')
+
+               <div>
+
+                <div>
+                  
+                </div>
+               </div>
+
+            </div>
           </div>
         </div>
     </body>
