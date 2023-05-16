@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brands;
 use Illuminate\Http\Request;
 
 class RentsController extends Controller
@@ -13,6 +14,7 @@ class RentsController extends Controller
     public function index()
     {
         //
+        return view('admin.rents.index');
     }
 
     /**
@@ -21,6 +23,12 @@ class RentsController extends Controller
     public function create()
     {
         //
+        $brands=Brands::all();
+        return view('admin.rents.create',compact('brands'));
+    }
+
+    public function getVariant(Request $request){
+        print_r($request);
     }
 
     /**

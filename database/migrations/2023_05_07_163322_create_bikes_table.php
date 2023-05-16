@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('bikes', function (Blueprint $table) {
             $table->id();
+            $table->string('number_plate');
+            $table->string('cc');
+            $table->string('billbook');
+            $table->string('status');
+            $table->string('model_year');
+            $table->string('variant_id');
             $table->timestamps();
         });
     }
