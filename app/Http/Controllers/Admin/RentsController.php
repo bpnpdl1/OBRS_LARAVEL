@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Bikes;
 use App\Models\Brands;
+use App\Models\Variants;
 use Illuminate\Http\Request;
 
 class RentsController extends Controller
@@ -28,7 +30,20 @@ class RentsController extends Controller
     }
 
     public function getVariant(Request $request){
-        print_r($request);
+        
+        $data=Variants::all()->where('brand_id','=',$request->brand_id);
+         $variants=$data->toArray();
+      
+     
+      return response()->json($variants);
+    }
+    public function getBike(Request $request){
+        
+        $data=Bikes::all()->where('variant_id','=',$request->variant_id);
+      $bikes=$data->toArray();
+      
+
+      return response()->json($bikes);
     }
 
     /**
@@ -37,6 +52,7 @@ class RentsController extends Controller
     public function store(Request $request)
     {
         //
+        dd($request->all());
     }
 
     /**

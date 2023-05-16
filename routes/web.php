@@ -35,6 +35,7 @@ Route::resource('/bikes',BikesController::class);
 
 Route::resource('/rents',RentsController::class);
 Route::post('/getVariant',[RentsController::class,'getVariant']);
+Route::post('/getBike',[RentsController::class,'getBike']);
 
 
 Route::get('/brands',[BrandsController::class,'index'])->name('brands.index');

@@ -36,8 +36,8 @@ class BrandsController extends Controller
     {
         //
         $request->validate([
-            'brand_logo' => 'required',
-            'brand_name' => 'required'
+            'brand_logo' => 'required|image|max:512',
+            'brand_name' => 'required|min:5'
 
         ]);
 
@@ -82,7 +82,8 @@ class BrandsController extends Controller
         //
         
         $request->validate([
-            'brand_logo' => 'sometimes'
+            'brand_name'=>'required',
+            'brand_logo' => 'sometimes|max:512|image'
 
         ]);
         $data = [

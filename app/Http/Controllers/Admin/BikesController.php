@@ -37,7 +37,12 @@ class BikesController extends Controller
     public function store(Request $request)
     {
         //
-    
+    $request->validate([
+          'number_plate'=>'required',
+          'cc'=>'required',
+          'status'=>'required',
+          'variant'=>'required',
+    ]);
 
         $path=Storage::disk('public')->put('bike_images',$request->file('image'));
         $path=str_replace('bike_images/','',$path);
