@@ -107,7 +107,7 @@ class BrandsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Brands $brand)
+    public function destroy(Request $brand)
     {
         //
         dd($brand);

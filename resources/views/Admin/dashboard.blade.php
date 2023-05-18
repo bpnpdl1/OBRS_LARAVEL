@@ -34,4 +34,15 @@
 
    </div>
 
+
+   <div class="border-2 border-gray-500 rounded-sm">
+  <h2 class="font-bold text-xl px-2 py-6">Rental Records</h2>
+
+ <center>
+     <img src="https://blog.risingstack.com/wp-content/uploads/2021/08/calendar-heatmap-built-with-d3js-like-github-1024x232.png" alt="">
+
+ </center>
+    
+   </div>
+
 @endsection

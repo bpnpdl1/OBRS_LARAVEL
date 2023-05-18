@@ -35,6 +35,7 @@
          <td>{{$sn++}}</td>
          <td><img src="{{ asset('storage/'.$brand['brand_logo']) }}" alt="brandlogo" style="object-fit: cover" class="h-20"></td>
          <td>{{ $brand['brand_name']}}</td>
+         
          <td>
             <a href="{{ route('brands.edit', ['id'=>$brand['id']]) }}" class="bg-blue-500 text-white py-1 px-2 rounded-md">Edit</a>
             <a onclick="toogle()"  class="bg-red-500 text-white py-1 px-2 rounded-md" id="{{ 'btdelete'.$brand['id'] }}">Delete</a>

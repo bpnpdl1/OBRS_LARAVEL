@@ -42,7 +42,7 @@
          <td>{{$bike['cc']}}</td>
          <td>{{$bike['brand_name']}}</td>
          <td>{{$bike['variant_name']}}</td>
-         <td><a class="bg-blue-500 rounded-md text-white p-1" href="{{asset('storage/bike_images/'.$bike['billbook'])}}"  target="_blank"><small>Click to View Bill Book</small></a></td>
+         <td><a class="bg-blue-500 rounded-md text-white p-1" href="{{asset('storage/bike_images/'.$bike['billbook'])}}"  target="_blank"><small>View Bill Book</small></a></td>
          <td>{{$bike['model_year']}}</td>
          
          <td>
@@ -65,6 +65,8 @@
 </table>
 
    </div>
+
+
 
 
 <script>

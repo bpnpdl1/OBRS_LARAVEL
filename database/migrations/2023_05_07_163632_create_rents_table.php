@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('rent_to_date');
             $table->string('status');
             $table->integer('bike_id');
-            $table->integer('renter_id;');
+            $table->foreignId('user')->constrained();
             $table->timestamps();
         });
     }
