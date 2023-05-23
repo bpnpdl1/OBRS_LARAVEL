@@ -32,9 +32,14 @@
          <th>Action</th>
       </tr>
    </thead>
+    <pre>
+ 
+     
+      </pre>
+       
+      
    <tbody>
       @foreach ($bikes as $bike)
-          
       
       <tr>
          <td>{{$sn++}}</td>
@@ -56,9 +61,16 @@
          </td>
          <td>{{$bike['created_at']->diffForHumans()}}</td>
          <td>
-            <a href="{{route('bikes.edit',$bike['id'])}}" class="bg-blue-500 text-white py-1 px-2 rounded-md">Edit</a>
-            <a href="" class="bg-red-500 text-white py-1 px-2 rounded-md">Delete</a>
-         </td>
+          <div class="flex flex-row gap-2">
+              <a href="{{route('bikes.edit',$bike['id'])}}" class="bg-blue-500 text-white py-1 px-2 rounded-sm">Edit</a>
+            <form action="{{route('bikes.destroy')}}" method="post">
+
+               @csrf
+               <input type="hidden" name="bike_id" id="" value="{{$bike['id']}}">
+               <input type="submit" value="Delete" class="bg-red-500 text-white rounded-sm py-1 px-2">
+            </form>
+          </div>
+           </td>
       </tr>
       @endforeach
    </tbody>

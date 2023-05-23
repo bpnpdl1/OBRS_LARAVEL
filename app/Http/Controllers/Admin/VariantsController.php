@@ -17,7 +17,13 @@ class VariantsController extends Controller
     {
         //
         $variants = Variants::join('brands','brands.id','=','variants.brand_id')->get();
-     
+        
+        $variant=Variants::all();
+        foreach($variant as $v)
+        {
+            $v->brand = $v->brands();
+        }
+        dd($variant->all());
 
         return view('admin.variants.index')->with(compact('variants'));
     }

@@ -30,7 +30,12 @@ Route::get('/dashboard',[DashboardController::class,'index'])->middleware(['auth
 
 
 
-Route::resource('/bikes',BikesController::class);
+Route::get('/bikes',[BikesController::class,'index'])->name('bikes.index');
+Route::get('/bikes/create',[BikesController::class,'create'])->name('bikes.create');
+Route::post('/bikes',[BikesController::class,'store'])->name('bikes.store');
+Route::get('/bikes/{id}/edit',[BikesController::class,'edit'])->name('bikes.edit');
+Route::post('/bikes/{id}/update',[BikesController::class,'update'])->name('bikes.update');
+Route::post('/bikes/destroy',[BikesController::class,'destroy'])->name('bikes.destroy');
 
 
 Route::resource('/rents',RentsController::class);
@@ -43,6 +48,7 @@ Route::get('/brands/create',[BrandsController::class,'create'])->name('brands.cr
 Route::post('/brands',[BrandsController::class,'store'])->name('brands.store');
 Route::get('/brands/{id}/edit',[BrandsController::class,'edit'])->name('brands.edit');
 Route::post('/brands/{id}/update',[BrandsController::class,'update'])->name('brands.update');
+Route::post('/brands/destroy',[BrandsController::class,'destroy'])->name('brands.destroy');
 
 Route::get('/variants',[VariantsController::class,'index'])->name('variants.index');
 Route::get('/variants/create',[VariantsController::class,'create'])->name('variants.create');

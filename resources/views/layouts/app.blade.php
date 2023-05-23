@@ -59,8 +59,8 @@
           <div class="flex-1 text-black flex flex-col">
             
             <div class="h-16 bg-gray-100 shadow-md flex flex-row justify-end items-center p-8 space-x-4">
-             <a ><i class="fa fa-bell  hover:bg-slate-300 p-3 rounded-full" aria-hidden="true" onclick="show('notifications')"></i> </a>
-                <a href=""><i class="fa fa-user hover:bg-slate-300 p-3 rounded-full"></i></a>
+             <a ><i class="fa fa-bell  hover:bg-slate-300 p-3 rounded-full" aria-hidden="true" onclick="ToggleModal('notificationModal')"></i> </a>
+                <a onclick="ToggleModal('userModal')"><i class="fa fa-user hover:bg-slate-300 p-3 rounded-full"></i></a>
             </div>
             <div class="flex-1 p-6">
              
@@ -79,7 +79,7 @@
 
 
 
-        <div class="fixed top-16 right-24 bg-slate-200 rounded-md shadow-sm p-2 flex flex-col w-72 hidden">
+        <div class="fixed top-16 right-24 bg-slate-200 rounded-md shadow-sm p-2 flex flex-col w-72 " style="display:none"  id="notificationModal">
            <div>
             <p class="text-xl font-semibold">Notifications</p>
            
@@ -95,11 +95,31 @@
                </ul>
            </div>
         </div>
+
+          <div class="fixed top-16 right-9 bg-slate-200 rounded-md shadow-lg p-2 flex flex-col w-52  border-black " style="display:none"  id="userModal">
+           <div>
+            <p class="text-xl font-semibold">User</p>
+           
+           </div>
+           <hr class="h-0.5 bg-black my-2">
+           <div>
+            <ul class="text-center">
+                <li class="hover:bg-gray-300 p-1 cursor-pointer">Profile</li>
+                <li class="hover:bg-gray-300 p-1 cursor-pointer">Logout</li>
+                 </ul>
+           </div>
+        </div>
         <script>
           var notifications;
-          function show(notifications){
+          function ToggleModal(notifications){
             var component=document.getElementById(notifications)
-            component.style.display="flex"
+           
+            if(component.style.display=="none"){
+              component.style.display="flex";
+            }
+            else{
+              component.style.display="none";
+            }
           }
 
         </script>

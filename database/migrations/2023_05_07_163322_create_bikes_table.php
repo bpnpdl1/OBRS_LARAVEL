@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('number_plate');
             $table->string('cc');
             $table->string('billbook');
-            $table->string('status');
+            $table->string('status')->default('available');
             $table->string('model_year');
-            $table->string('variant_id');
+            $table->foreignId('variants_id');
             $table->timestamps();
         });
     }

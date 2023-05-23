@@ -10,4 +10,8 @@ class Variants extends Model
     use HasFactory;
 
     protected $guarded=[];
+
+    public function brands(){
+        return $this->belongsTo(Brands::class);
+    }
 }

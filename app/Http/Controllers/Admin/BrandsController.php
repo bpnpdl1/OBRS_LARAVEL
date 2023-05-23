@@ -110,6 +110,10 @@ class BrandsController extends Controller
     public function destroy(Request $brand)
     {
         //
-        dd($brand);
+       $brand= Brands::find($brand->brand_id);
+      Storage::disk('public')->delete($brand['brand_logo']);  
+       $brand->delete();
+
+        return redirect(route('brands.index'))->with('success','Brand Deleted Successfully');
     }
 }

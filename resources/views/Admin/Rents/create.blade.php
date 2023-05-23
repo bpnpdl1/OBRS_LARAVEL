@@ -55,8 +55,8 @@
 
         
            <div class="p-2">
-            <label for="variant_image" class="font-bold">Enter Renter Email</label>
-            <input type="text" name="brand_name" id="name" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" value="{{old('brand_name')}}">
+            <label for="email" class="font-bold">Enter Renter Email</label>
+            <input type="text" name="email" id="email" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" value="{{old('email')}}">
             
            </div>
          
@@ -113,6 +113,9 @@
 
 
 <script>
+
+
+  
   $(document).ready(function() {
     //brand>variant
     $('#brand').change(function() {

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('variant_image');
             $table->string('variant_name');
             $table->integer('variant_rental_price');
-            $table->integer('brand_id');
+            $table->foreignId('brand_id')->constrained();
             $table->timestamps();
         });
     }

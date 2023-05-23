@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Bikes;
+use App\Models\Brands;
 use App\Models\Variants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class BikesController extends Controller
 {
@@ -16,9 +18,14 @@ class BikesController extends Controller
     public function index()
     {
         //
-        $bikes = Variants::join('bikes', 'variants.id', '=', 'bikes.variant_id')->join('brands','brands.id','=','variants.brand_id')->get();
+
+        $bikes = Bikes::join('variants','bikes.variants_id','=','variants.id')
+        ->select('bikes.*','variants.variant_name','variants.brand_id')
+        ->get();
        
-        return view('admin.bikes.index')->with(compact('bikes'));
+       $brands=Brands::all() ;
+       
+        return view('admin.bikes.index')->with(compact('bikes','brands'));
     }
 
     /**
@@ -50,7 +57,7 @@ class BikesController extends Controller
         $data=[
             'number_plate'=>$request['number_plate'],
             'cc'=>$request['cc'],
-            'variant_id'=>$request['variant'],
+            'variants_id'=>$request['variant'],
             'status'=>$request['status'],
             'model_year'=>$request['model_year'],
             'billbook'=>$path
@@ -76,9 +83,10 @@ class BikesController extends Controller
     {
         //
         $variants=Variants::all();
-        $bikes = Variants::join('bikes', 'variants.id', '=', 'bikes.variant_id')->join('brands','brands.id','=','variants.brand_id')->get();
+        $bike=Bikes::find($id);
+        // $bikes = Variants::join('bike', 'variants.id', '=', 'bikes.variants_id')->join('brands','brands.id','=','variants.brand_id')->get();
        
-        return view('admin.bikes.edit')->with(compact('variants','bikes'));
+        return view('admin.bikes.edit')->with(compact('variants','bike'));
 
     }
 
@@ -88,13 +96,59 @@ class BikesController extends Controller
     public function update(Request $request, string $id)
     {
         //
+         $request->validate([
+          'number_plate'=>'required',
+          'cc'=>'required',
+          'status'=>'required',
+          'variant'=>'required',
+          'billbook'=>'nullable|image'
+    ]);
+
+
+
+    $bike=Bikes::find($id);
+   
+      
+        $data=[
+            'number_plate'=>$request['number_plate'],
+            'cc'=>$request['cc'],
+            'variants_id'=>$request['variant'],
+            'status'=>$request['status'],
+            'model_year'=>$request['model_year']
+        ];
+
+         
+
+        $file=(array)$request->file('billbook');
+
+           if(!empty($file)){
+
+           
+            $path=Storage::disk('public')->put('bike_images',$request->file('billbook'));
+            Storage::disk('public')->delete('bike_images/'.$bike['billbook']);
+            $path=str_replace('bike_images/','',$path);
+            
+            $data=['billbook'=>$path];
+
+          
+ 
+                 }
+           Bikes::find($id)->update($data);
+     
+        return redirect(route('bikes.index'))->with('success','Bike Details Updated Successfully');
+        
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
         //
+       $bike_id=$request->bike_id;   
+       $bike=Bikes::find($bike_id);
+       $bike->delete();
+      
+       return redirect(route('bikes.index'))->with('success','Bike Detail Deleted Successfully');
     }
 }

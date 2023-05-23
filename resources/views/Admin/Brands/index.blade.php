@@ -38,7 +38,7 @@
          
          <td>
             <a href="{{ route('brands.edit', ['id'=>$brand['id']]) }}" class="bg-blue-500 text-white py-1 px-2 rounded-md">Edit</a>
-            <a onclick="toogle()"  class="bg-red-500 text-white py-1 px-2 rounded-md" id="{{ 'btdelete'.$brand['id'] }}">Delete</a>
+            <a onclick="toogle({{$brand['id']}})"  class="bg-red-500 text-white py-1 px-2 rounded-md" id="{{ 'btdelete'.$brand['id'] }}">Delete</a>
              
 
          </td>
@@ -52,11 +52,12 @@
    <div id="DeleteModal" style="display: none;" class=" bg-gray-400 fixed top-0 left-0 h-screen w-screen backdrop-blur-md bg-opacity-50  flex flex-row items-center justify-center">
     <div class="bg-white border border-black p-8 flex flex-col justify-center items-center w-fit rounded-md">
        <p> Are you Sure to Delete ?</p>
-       <form action="" method="post">
+      <form action="{{route('brands.destroy')}}" method="post">
          @csrf
-         @method('delete')
-        <Button type="submit" class="bg-green-500 px-2 py-1 rounded-md text-white" onclick="delete()" alt="dsds" >Yes</Button>
-        <Button class="bg-red-500 px-2 py-1 rounded-md text-white" onclick="toogle()">No</Button>
+         <input type="hidden" name="brand_id" id="dataid"   value="">
+        
+        <Button type="submit" class="bg-green-500 px-2 py-1 rounded-md text-white"  alt="dsds" >Yes</Button>
+        <Button class="bg-red-500 px-2 py-1 rounded-md text-white" onclick="toogle()" type="button">No</Button>
         
        </form>
 

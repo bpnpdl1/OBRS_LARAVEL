@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('rents', function (Blueprint $table) {
             $table->id();
             $table->date('rent_from_date');
+
             $table->date('rent_to_date');
             $table->string('status');
-            $table->integer('bike_id');
-            $table->foreignId('user')->constrained();
+            $table->foreignId('bike_id')->constrained();
+            $table->foreignId('user_id')->constrained();
+            $table->integer('total_rental_price');
             $table->timestamps();
         });
     }
