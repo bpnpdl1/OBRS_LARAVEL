@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Bikes;
-use App\Models\Brands;
-use App\Models\Variants;
+use App\Models\Bike;
+use App\Models\Brand;
+use App\Models\Variant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -19,11 +19,11 @@ class BikesController extends Controller
     {
         //
 
-        $bikes = Bikes::join('variants','bikes.variants_id','=','variants.id')
+        $bikes = Bike::join('variants','bikes.variants_id','=','variants.id')
         ->select('bikes.*','variants.variant_name','variants.brand_id')
         ->get();
        
-       $brands=Brands::all() ;
+       $brands=Brand::all() ;
        
         return view('admin.bikes.index')->with(compact('bikes','brands'));
     }
@@ -34,7 +34,7 @@ class BikesController extends Controller
     public function create()
     {
         //
-        $variants=Variants::all();
+        $variants=Variant::all();
         return view('admin.bikes.create')->with(compact('variants'));
     }
 
@@ -63,7 +63,7 @@ class BikesController extends Controller
             'billbook'=>$path
         ];
       
-        Bikes::create($data);
+        Bike::create($data);
         $success="New Bike Added Successfully";
         return redirect(route('bikes.index'))->with('success',$success);
     }
@@ -82,8 +82,8 @@ class BikesController extends Controller
     public function edit(string $id)
     {
         //
-        $variants=Variants::all();
-        $bike=Bikes::find($id);
+        $variants=Variant::all();
+        $bike=Bike::find($id);
         // $bikes = Variants::join('bike', 'variants.id', '=', 'bikes.variants_id')->join('brands','brands.id','=','variants.brand_id')->get();
        
         return view('admin.bikes.edit')->with(compact('variants','bike'));
@@ -106,7 +106,7 @@ class BikesController extends Controller
 
 
 
-    $bike=Bikes::find($id);
+    $bike=Bike::find($id);
    
       
         $data=[
@@ -133,7 +133,7 @@ class BikesController extends Controller
           
  
                  }
-           Bikes::find($id)->update($data);
+           Bike::find($id)->update($data);
      
         return redirect(route('bikes.index'))->with('success','Bike Details Updated Successfully');
         
@@ -146,7 +146,7 @@ class BikesController extends Controller
     {
         //
        $bike_id=$request->bike_id;   
-       $bike=Bikes::find($bike_id);
+       $bike=Bike::find($bike_id);
        $bike->delete();
       
        return redirect(route('bikes.index'))->with('success','Bike Detail Deleted Successfully');

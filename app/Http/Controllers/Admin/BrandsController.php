@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brands;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,7 +15,7 @@ class BrandsController extends Controller
     public function index()
     {
         //
-        $brands = Brands::all();
+        $brands = Brand::all();
         $brands = $brands->toArray();
         return view('admin.brands.index')->with(compact('brands'));
     }
@@ -47,8 +47,8 @@ class BrandsController extends Controller
             'brand_name' => $request->brand_name,
             'brand_logo' => $path
         ];
-        Brands::create($data);
-        $brands = Brands::all();
+        Brand::create($data);
+        $brands = Brand::all();
         $brands = $brands->toArray();
         $success="Successfully Created New Brand";
         // return view('admin.brands.index')->with(compact('brands','success'));
@@ -69,7 +69,7 @@ class BrandsController extends Controller
     public function edit(string $id)
     {
         //
-        $brand = Brands::find($id);
+        $brand = Brand::find($id);
 
         return view('admin.brands.edit')->with(compact('brand'));
     }
@@ -89,14 +89,14 @@ class BrandsController extends Controller
         $data = [
             'brand_name' => $request->brand_name
         ];
-        Brands::find($id)->update($data);
+        Brand::find($id)->update($data);
 
 
         if (!is_null($request->file('brand_logo'))) {
-            $brand=Brands::find($id);
+            $brand=Brand::find($id);
             Storage::disk('public')->delete($brand['brand_logo']);  
             $path = Storage::disk('public')->put('logo', $request->file('brand_logo'));
-            Brands::find($id)->update(['brand_logo'=>$path]);
+            Brand::find($id)->update(['brand_logo'=>$path]);
 
         }
 
@@ -110,7 +110,7 @@ class BrandsController extends Controller
     public function destroy(Request $brand)
     {
         //
-       $brand= Brands::find($brand->brand_id);
+       $brand= Brand::find($brand->brand_id);
       Storage::disk('public')->delete($brand['brand_logo']);  
        $brand->delete();
 

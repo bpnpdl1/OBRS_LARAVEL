@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bike;
 use App\Models\Bikes;
-use App\Models\Brands;
+use App\Models\Brand;
+use App\Models\Variant;
 use App\Models\Variants;
 use Illuminate\Http\Request;
 
@@ -15,9 +17,9 @@ class DashboardController extends Controller
     public function index()
     {
         //
-        $brands=Brands::count();
-        $variants=Variants::count();
-        $bikes=Bikes::count();
+        $brands=Brand::count(); 
+        $variants=Variant::count();
+        $bikes=Bike::count();
         $counts=compact('brands','variants','bikes');
         
         return view('admin.dashboard')->with($counts);

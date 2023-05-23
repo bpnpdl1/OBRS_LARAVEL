@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('rents', function (Blueprint $table) {
             $table->id();
             $table->date('rent_from_date');
-
             $table->date('rent_to_date');
             $table->string('status');
             $table->foreignId('bike_id')->constrained();

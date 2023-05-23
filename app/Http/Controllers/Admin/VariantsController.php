@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brands;
-use App\Models\Variants;
+use App\Models\Brand;
+use App\Models\Variant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,14 +16,15 @@ class VariantsController extends Controller
     public function index()
     {
         //
-        $variants = Variants::join('brands','brands.id','=','variants.brand_id')->get();
+        $variants = Variant::join('brands','brands.id','=','variants.brand_id')->get();
         
-        $variant=Variants::all();
-        foreach($variant as $v)
-        {
-            $v->brand = $v->brands();
+        $variant=Variant::all();
+        echo '<pre>';
+        foreach($variant as $item){
+            print_r($item->brand->brand_name);
         }
-        dd($variant->all());
+        echo '</pre>';
+        die;
 
         return view('admin.variants.index')->with(compact('variants'));
     }
@@ -34,7 +35,7 @@ class VariantsController extends Controller
     public function create()
     {
         //
-        $brands = Brands::all();
+        $brands = Brand::all();
         return view('admin.variants.create')->with(compact('brands'));
     }
 
@@ -59,10 +60,10 @@ class VariantsController extends Controller
             'variant_image' => $path
         ];
 
-        Variants::create($data);
+        Variant::create($data);
 
 
-        $variants = Variants::all();
+        $variants = Variant::all();
         $success = "Created new variant successfully";
 
         return redirect(route('variants.index'))->with('success', $success);
@@ -84,8 +85,8 @@ class VariantsController extends Controller
         //
 
 
-        $variant = Variants::find($id);
-        $brands = Brands::all();
+        $variant = Variant::find($id);
+        $brands = Brand::all();
         return view('admin.variants.edit')->with(compact('id', 'variant', 'brands'));
     }
 
@@ -105,9 +106,9 @@ class VariantsController extends Controller
 
     
       
-        Variants::find($id)->update($data);
+        Variant::find($id)->update($data);
 
-        $variant = Variants::find($id);
+        $variant = Variant::find($id);
 
         if (!is_null($request->file('variant_image')) && !is_null($variant['variant_image'])) {
 
@@ -115,7 +116,7 @@ class VariantsController extends Controller
 
             $path = Storage::disk('public')->put('variant_images', $request->file('variant_image'));
             $path = str_replace('variant_images/', '', $path);
-            Variants::find($id)->update(['variant_image' => $path]);
+            Variant::find($id)->update(['variant_image' => $path]);
         }
 
      

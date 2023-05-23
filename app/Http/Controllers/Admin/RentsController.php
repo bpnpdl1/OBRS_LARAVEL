@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Bikes;
-use App\Models\Brands;
-use App\Models\Rents;
+use App\Models\Bike;
+use App\Models\Brand;
+use App\Models\Rent;
 use App\Models\User;
-use App\Models\Variants;
+use App\Models\Variant;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -19,7 +19,7 @@ class RentsController extends Controller
     public function index()
     {
         //
-        $rents=Rents::join('bikes','bikes.id','=','rents.bike_id')
+        $rents=Rent::join('bikes','bikes.id','=','rents.bike_id')
         ->join('users','users.id','=','rents.user_id')
         ->select('rents.*','users.name','bikes.number_plate')
         ->get();
@@ -33,13 +33,13 @@ class RentsController extends Controller
     public function create()
     {
         //
-        $brands=Brands::all();
+        $brands=Brand::all();
         return view('admin.rents.create',compact('brands'));
     }
 
     public function getVariant(Request $request){
         
-        $data=Variants::all()->where('brand_id','=',$request->brand_id);
+        $data=Variant::all()->where('brand_id','=',$request->brand_id);
          $variants=$data->toArray();
       
      
@@ -47,7 +47,7 @@ class RentsController extends Controller
     }
     public function getBike(Request $request){
         
-        $data=Bikes::all()->where('variants_id','=',$request->variant_id);
+        $data=Bike::all()->where('variants_id','=',$request->variant_id);
       $bikes=$data->toArray();
       
 
@@ -62,7 +62,7 @@ class RentsController extends Controller
         //total_rental_price
         //
 
-        $variants=Variants::find($request->variant);
+        $variants=Variant::find($request->variant);
 
         $from_date=Carbon::createFromDate($request->from_date);
          $to_date=Carbon::createFromDate($request->to_date);
@@ -83,7 +83,7 @@ class RentsController extends Controller
              "user_id"=>$user->id
         ];
 
-        Rents::create($data);
+        Rent::create($data);
         return redirect(route('rents.index'))->with('success','Bike Added on rent Successfully');
 
     }
