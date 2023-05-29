@@ -40,7 +40,7 @@
          <td>{{$sn++}}</td>
          <td><img src="{{ asset('storage/variant_images/'.$variant['variant_image']) }}" alt="variantlogo" style="object-fit: cover" class="h-20"></td>
          <td>{{ $variant['variant_name']}}</td>
-         <td>{{ $variant['brand_name']}}</td>
+         <td>{{ $variant->brand->brand_name}}</td>
          <td>{{ $variant['variant_rental_price']}}</td>
          <td>
             <a href="{{ route('variants.edit', ['id'=>$variant['id']]) }}" class="bg-blue-500 text-white py-1 px-2 rounded-md">Edit</a>

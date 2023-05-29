@@ -16,15 +16,9 @@ class VariantsController extends Controller
     public function index()
     {
         //
-        $variants = Variant::join('brands','brands.id','=','variants.brand_id')->get();
+        $variants = Variant::all();
         
-        $variant=Variant::all();
-        echo '<pre>';
-        foreach($variant as $item){
-            print_r($item->brand->brand_name);
-        }
-        echo '</pre>';
-        die;
+        
 
         return view('admin.variants.index')->with(compact('variants'));
     }

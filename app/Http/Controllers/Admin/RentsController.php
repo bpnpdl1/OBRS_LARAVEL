@@ -9,6 +9,7 @@ use App\Models\Rent;
 use App\Models\User;
 use App\Models\Variant;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 
 class RentsController extends Controller
@@ -27,12 +28,39 @@ class RentsController extends Controller
         return view('admin.rents.index')->with(compact('rents'));
     }
 
+
+
+
+    /*
+    Disable date return
+    
+    */
+
+   
+public function rented_dates($from_date, $to_date){
+    $rented_dates = [];
+
+    $current_date = Carbon::parse($from_date);
+    $end_date = Carbon::parse($to_date);
+
+    for ($i = $current_date; $i <= $end_date; $i->addDay()) {
+        $rented_dates[] = $i->format('Y-m-d');
+    }
+
+    return $rented_dates;
+}
+
+
+
     /**
      * Show the form for creating a new resource.
      */
+    
     public function create()
     {
         //
+       
+       
         $brands=Brand::all();
         return view('admin.rents.create',compact('brands'));
     }
@@ -45,11 +73,31 @@ class RentsController extends Controller
      
       return response()->json($variants);
     }
+
+    public function getRentalDates(Request $request){
+        $rental_dates=Rent::all()->where('bike_id','=',$request->bike_id);
+        $rental_dates=$rental_dates->toArray();
+
+
+        
+        
+
+        return response()->json($rental_dates);
+
+    }
+
+
     public function getBike(Request $request){
         
-        $data=Bike::all()->where('variants_id','=',$request->variant_id);
-      $bikes=$data->toArray();
+        // $data=Bike::all()->where('variant_id','=',$request->variant_id);
+        $data=Bike::join('variants','variants.id','=','bikes.variant_id')
+        ->select('bikes.*','variants.variant_rental_price')->where('variant_id','=',$request->variant_id)->get();
+
       
+
+       
+      $bikes=$data->toArray();
+       
 
       return response()->json($bikes);
     }

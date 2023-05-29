@@ -17,19 +17,20 @@
    </div>
    <div class="px-1 shadow-lg">
     
-<table id="mytable" >
+      {{-- //mytable --}}
+<table   id="mytable">
    <thead>
-      <tr>
-         <th>Sn</th>
-         <th>Bike Number Plate</th>
-         <th>cc</th>
-         <th>Bike Brand</th>
-         <th>Variant name</th>
-         <th>Bill Book</th>
-         <th>Model Year</th>
-         <th>Status</th>
-         <th>Added date</th>
-         <th>Action</th>
+      <tr >
+         <th >Sn</th>
+         <th >Bike Number Plate</th>
+         <th >cc</th>
+         <th >Bike Brand</th>
+         <th >Variant name</th>
+         <th >Bill Book</th>
+         <th >Model Year</th>
+         <th >Status</th>
+         <th >Added date</th>
+         <th >Action</th>
       </tr>
    </thead>
     <pre>
@@ -41,16 +42,16 @@
    <tbody>
       @foreach ($bikes as $bike)
       
-      <tr>
-         <td>{{$sn++}}</td>
-         <td>{{$bike['number_plate']}}</td>
-         <td>{{$bike['cc']}}</td>
-         <td>{{$bike['brand_name']}}</td>
-         <td>{{$bike['variant_name']}}</td>
-         <td><a class="bg-blue-500 rounded-md text-white p-1" href="{{asset('storage/bike_images/'.$bike['billbook'])}}"  target="_blank"><small>View Bill Book</small></a></td>
-         <td>{{$bike['model_year']}}</td>
+      <tr >
+         <td >{{$sn++}}</td>
+         <td  > {{$bike['number_plate']}}</td>
+         <td >{{$bike['cc']}}</td>
+         <td >{{$bike->variant->brand->brand_name}}</td>
+         <td >{{$bike->variant->variant_name}}</td>
+         <td ><a class="bg-blue-500 rounded-md text-white p-1" href="{{asset('storage/bike_images/'.$bike['billbook'])}}"  target="_blank"><small>View Bill Book</small></a></td>
+         <td >{{$bike['model_year']}}</td>
          
-         <td>
+         <td >
             @if ($bike['status']=='Available')
             <small class="bg-green-500 p-1 rounded-sm text-white">Available</small>
       @else
@@ -59,8 +60,8 @@
          
             @endif
          </td>
-         <td>{{$bike['created_at']->diffForHumans()}}</td>
-         <td>
+         <td >{{$bike['created_at']->diffForHumans()}}</td>
+         <td  >
           <div class="flex flex-row gap-2">
               <a href="{{route('bikes.edit',$bike['id'])}}" class="bg-blue-500 text-white py-1 px-2 rounded-sm">Edit</a>
             <form action="{{route('bikes.destroy')}}" method="post">
@@ -75,6 +76,7 @@
       @endforeach
    </tbody>
 </table>
+
 
    </div>
 

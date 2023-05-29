@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('billbook');
             $table->string('status')->default('available');
             $table->string('model_year');
-            $table->foreignId('variants_id');
+            $table->foreignId('variant_id')->constrained();
             $table->timestamps();
         });
     }

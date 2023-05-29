@@ -19,13 +19,10 @@ class BikesController extends Controller
     {
         //
 
-        $bikes = Bike::join('variants','bikes.variants_id','=','variants.id')
-        ->select('bikes.*','variants.variant_name','variants.brand_id')
-        ->get();
+        $bikes = Bike::paginate(10);
        
-       $brands=Brand::all() ;
        
-        return view('admin.bikes.index')->with(compact('bikes','brands'));
+        return view('admin.bikes.index')->with(compact('bikes'));
     }
 
     /**
@@ -57,7 +54,7 @@ class BikesController extends Controller
         $data=[
             'number_plate'=>$request['number_plate'],
             'cc'=>$request['cc'],
-            'variants_id'=>$request['variant'],
+            'variant_id'=>$request['variant'],
             'status'=>$request['status'],
             'model_year'=>$request['model_year'],
             'billbook'=>$path
@@ -112,7 +109,7 @@ class BikesController extends Controller
         $data=[
             'number_plate'=>$request['number_plate'],
             'cc'=>$request['cc'],
-            'variants_id'=>$request['variant'],
+            'variant_id'=>$request['variant'],
             'status'=>$request['status'],
             'model_year'=>$request['model_year']
         ];

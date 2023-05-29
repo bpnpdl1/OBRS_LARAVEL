@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/dashboard',[DashboardController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
@@ -41,6 +41,8 @@ Route::post('/bikes/destroy',[BikesController::class,'destroy'])->name('bikes.de
 Route::resource('/rents',RentsController::class);
 Route::post('/getVariant',[RentsController::class,'getVariant']);
 Route::post('/getBike',[RentsController::class,'getBike']);
+Route::post('/getRentalDates',[RentsController::class,'getRentalDates']);
+
 
 
 Route::get('/brands',[BrandsController::class,'index'])->name('brands.index');
