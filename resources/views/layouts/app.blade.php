@@ -117,7 +117,7 @@
 
           <div class="fixed top-16 right-9 bg-slate-200 rounded-md shadow-lg p-2 flex flex-col w-52  border-black " style="display:none"  id="userModal">
            <div>
-            <p class="text-xl font-semibold">{{auth()->user()->role}}: {{auth()->user()->name}}</p>
+            <p class="text-xl font-semibold">{{strtoupper(auth()->user()->role)}}: {{auth()->user()->name}}</p>
            
            </div>
            <hr class="h-0.5 bg-black my-2">
