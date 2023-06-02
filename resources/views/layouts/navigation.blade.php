@@ -4,7 +4,7 @@
     <div class=" flex flex-shrink gap-16 justify-center">
         <a href="{{route('home')}}">Home</a>
         <a href="">About Us</a>
-        <a href="">Categories</a>
+        <a href="">Our Bikes</a>
         <a href="{{route('login')}}">Login</a>
     </div>
     <div>
@@ -15,3 +15,12 @@
     </div> 
    </div>
 </nav>
+
+
+<script>
+    window.addEventListener('scroll',function(){
+    
+
+
+    });
+</script>

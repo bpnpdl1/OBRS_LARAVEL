@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\RentsController;
 use App\Http\Controllers\Admin\VariantsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Renter\RenterController;
+use App\Models\Brand;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,7 +22,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+
+    $brands=Brand::all();
+    return view('home',compact('brands'));
 })->name('home');
 
 Route::get('/dashboard',[DashboardController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
@@ -37,6 +41,7 @@ Route::get('/bikes/{id}/edit',[BikesController::class,'edit'])->name('bikes.edit
 Route::post('/bikes/{id}/update',[BikesController::class,'update'])->name('bikes.update');
 Route::post('/bikes/destroy',[BikesController::class,'destroy'])->name('bikes.destroy');
 
+Route::get('/showbikes',[RenterController::class,'index']);
 
 Route::resource('/rents',RentsController::class);
 Route::post('/getVariant',[RentsController::class,'getVariant']);

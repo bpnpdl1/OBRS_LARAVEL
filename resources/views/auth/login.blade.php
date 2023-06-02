@@ -2,8 +2,10 @@
 
 @section('content')
 
-<div class="flex flex-row justify-center bg-red-600 h-[80vh] items-center" style="width: inherit;">
-    <form action="" class="flex flex-col p-5 w-1/3 shadow bg-white">
+<div class="flex flex-row justify-center h-[80vh] items-center" style="width: inherit;">
+    <form action="{{route('login')}}" method="POST" class="flex flex-col p-6 w-1/3 shadow-lg bg-white ">
+        <legend class="font-semibold text-2xl text-center">Login</legend>
+        @csrf
          <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
@@ -30,16 +32,13 @@
                 <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
             </label>
         </div>
-   <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+   <div class="flex flex-col items-center justify-end mt-4">
+           
 
-            <x-primary-button class="ml-3">
-                {{ __('Log in') }}
-            </x-primary-button>
+          <input type="submit" value="Login" class="bg-slate-700 py-2 w-full px-1 text-white rounded-sm">
+           <span class=" font-thin text-sm p-1 text-center">Not have an Account?</span>
+
+            <a href="{{route('register')}}"  class="bg-slate-700 py-2 w-full px-1 text-white rounded-sm text-center">Register a New Account</a>
         </div>
 
     </form>
