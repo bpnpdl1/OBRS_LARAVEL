@@ -10,6 +10,7 @@ class AdminRentDetails extends Component
 {
     use WithPagination;
     public  $data="djhfd",$rentalstatus,$entries=10,$rentdialog='hide',$rent1;
+    public $rentalpayments=['status'=>'','payment_method'=>''];
     protected $rents;
 
 public function switchtopaid($i_d){
@@ -25,15 +26,15 @@ public function tooglerentdialog($id){
         $this->rentdialog="show";
 
         $this->rent1=Rent::find($id);
-
-       
-
-
-
+        $this->rentalpayments=$this->rent1->toArray();
 
     }else{
         $this->rentdialog="hide";
     }
+}
+
+public function saverentaltransaction(){
+    dd($this->rentalpayments);
 }
 
 

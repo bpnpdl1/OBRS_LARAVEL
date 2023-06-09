@@ -19,7 +19,7 @@
         </div>
 
         <div class="flex gap-2 items-center">
-          <span class="text-sm">Select Status</span>
+          <span class="text-sm">Select By Payment Status</span>
           <select id="rental-status" name="rental-status" class="rounded bg-gray-300 flex items-center py-1" wire:model="rentalstatus">
             <option disabled>--select--</option>
             <option value="">Show all</option>
@@ -107,19 +107,32 @@
       <h2 class="text-xl font-semibold mt-4 p-3 rounded-sm">Rental Transaction Information</h2>
       <hr class="h-0.5 bg-black">
       <p class="my-3">Rental Number:  {{ $rent1->rental_number }}</p>
-      <div class="flex flex-col gap-3 mt-4">
+    
+      <form wire:submit.prevent="saverentaltransaction">
+
+    <div class="flex flex-col gap-3 mt-4">
 
           <div class=" grid grid-cols-2 content-center items-center gap-2">
 
        <div class="flex flex-col align-middle gap-4 justify-center">
          <label for="">Payment Status</label>
+           @if($rentalpayments['status']=="Paid")
+          <label for="">Payment Method</label>
          <label for="">Rental Status</label>
          <label for="">Refund Amount <br> <center><small>(Optional)</small></center></label>
+         @endif
        </div>
        <div class="flex flex-col justify-center gap-2">
-         <select name="" id="" class="rounded scale-90">
+         <select name="" id="" class="rounded scale-90" wire:model="rentalpayments.status">
             <option @if($rent1->status=="Payment Pending") selected @endif   value="Payment Pending">Payment Pending</option>
           <option @if($rent1->status=="Paid") selected @endif  value="Paid">Paid</option> 
+       
+
+   @if($rentalpayments['status']=="Paid")
+         </select>
+           <select name="payment_method" id="" class="rounded scale-90" wire:model="rentalpayments.payment_method">
+            <option @if($rent1->payment_method=="Online") selected @endif   value="Online">Online</option>
+          <option @if($rent1->payment_method=="Cash on Hand") selected @endif  value="Cash on Hand">Cash on Hand</option> 
        
 
          </select>
@@ -128,6 +141,8 @@
             <option @if($rent1->status=="Paid") selected @endif  value="Mark as Return">Mark as Return</option> 
          </select>
          <input type="number" placeholder="Refund Amount"  class="rounded scale-90">
+
+         @endif
          </div>
 
           </div>
@@ -135,6 +150,8 @@
                
          <button class="text-white py-1 rounded bg-black">Save</button>
       </div>
+
+      </form>
    </div>
 
   </div>
