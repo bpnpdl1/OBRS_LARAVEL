@@ -20,7 +20,7 @@ var k=0;
         sub_bikecounts_array[i] = []; // Create an empty array for each dates sub array
 
         for (var j = 0; j < sublength; j++) {
-          if (k >= dates.length) {
+          if (k > dates.length) {
             break;
           }
 
@@ -53,16 +53,22 @@ postion=sub_bikecounts_array.length-1;
     <p class="text-2xl">{{ $variants }}</p>
 </div>
 <div class="bg-gray-800 w-32 rounded-md text-white flex flex-col align-center justify-center p-6">
-    <h2 class="font-bold text-xl">Bikes</h2>
-    <p class="text-2xl">{{$bikes}}</p>
+    <a href="{{ route('bikes.index') }}" class="font-bold text-xl">Bikes</a>
+   <div>
+     <p class="text-2xl">{{$bikes}}</p>
+   </div>
 </div>
-<div class="bg-gray-800 w-32 rounded-md text-white flex flex-col align-center justify-center p-6">
-    <h2 class="font-bold text-xl">Rents</h2>
-    <p class="text-2xl">30</p>
+<div class="bg-gray-800 w-40 rounded-md text-white flex flex-col align-center justify-center p-6">
+    <a href="{{ route('rents.index') }}" class="font-bold text-xl">Rents</a>
+   <div>
+     <p class="text-xs">New rent request : {{ $newrents }}</p>
+      <p class="text-xs">Registered  rent : {{ $registeredrents }}</p>
+       <p class="text-sm">Total : {{ $rents }}</p>
+   </div>
 </div>
 <div class="bg-gray-800 w-32 rounded-md text-white flex flex-col align-center justify-center p-6">
     <h2 class="font-bold text-xl">Renters</h2>
-    <p class="text-2xl">30</p>
+    <p class="text-2xl">{{ $renters }}</p>
 </div>
 
    </div>

@@ -6,6 +6,7 @@ use App\Models\Bike;
 use App\Models\Bikes;
 use App\Models\Brand;
 use App\Models\Rent;
+use App\Models\User;
 use App\Models\Variant;
 use App\Models\Variants;
 use Carbon\Carbon;
@@ -23,7 +24,10 @@ class DashboardController extends Controller
         $brands=Brand::count(); 
         $variants=Variant::count();
         $bikes=Bike::count();
-       
+        $newrents=Rent::where('status','Payment Pending')->count();
+        $registeredrents=Rent::where('status','Paid')->count();
+        $rents=Rent::count();
+        $renters=User::where('role','renter')->count();
 
         // $first_row_rent=Rent::first()->value('rent_from_date');
         //   $last_row_rent=Rent::latest('id')->value('rent_to_date');
@@ -49,7 +53,7 @@ class DashboardController extends Controller
      
         // $dateCounts=collect($dateCounts)->paginate(5);
       
-        $counts=compact('brands','variants','bikes','bikecounts','dates');
+        $counts=compact('brands','variants','bikes','bikecounts','dates','newrents','registeredrents','rents','renters');
         
 
         

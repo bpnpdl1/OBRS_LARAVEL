@@ -13,4 +13,9 @@ class Bike extends Model
     public function variant(){
         return $this->belongsTo(Variant::class);
     }
+
+    public function rents(){
+        return $this->belongsToMany(Rent::class);
+    }
+
 }

@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rents', function (Blueprint $table) {
+        Schema::create('variants', function (Blueprint $table) {
             $table->id();
-            $table->date('rent_from_date');
-            $table->date('rent_to_date');
-            $table->string('status');
-            $table->foreignId('bike_id')->constrained();
-            $table->foreignId('user_id')->constrained();
-            $table->integer('total_rental_price');
+            $table->string('variant_image');
+            $table->string('variant_name');
+            $table->integer('variant_rental_price');
+            $table->string('brand_id')->constrained();
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rents');
+        Schema::dropIfExists('variants');
     }
 };

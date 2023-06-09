@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Company;
 use Illuminate\Support\ServiceProvider;
+
+use function PHPUnit\Framework\isNull;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,5 +23,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+   $company=Company::first();
+
+
+   if(isset($company)){
+        view()->share('companyname', $company['name']);
+   }else{
+    view()->share('companyname', 'Bike Rental');
+   }
+
     }
 }

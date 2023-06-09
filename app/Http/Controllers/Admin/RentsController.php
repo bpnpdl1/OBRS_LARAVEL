@@ -20,15 +20,12 @@ class RentsController extends Controller
     public function index()
     {
         //
-        $rents=Rent::join('bikes','bikes.id','=','rents.bike_id')
-        ->join('users','users.id','=','rents.user_id')
-        ->select('rents.*','users.name','bikes.number_plate')
-        ->get();
+       
       
-        return view('admin.rents.index')->with(compact('rents'));
+        return view('admin.rents.index');
     }
-
-
+    
+  
 
 
     /*
@@ -125,11 +122,14 @@ public function rented_dates($from_date, $to_date){
         $data=[
             "rent_from_date" => $request->from_date,
             "rent_to_date" => $request->to_date,
-            "status" => "Available",
+            "status" => "Paid",
             'total_rental_price'=>$total_rental_price,
              "bike_id" => $request->bike,
              "user_id"=>$user->id
         ];
+
+        $bike['status']="On Rent";
+        Bike::find($request->bike)->update($bike);
 
         Rent::create($data);
         return redirect(route('rents.index'))->with('success','Bike Added on rent Successfully');

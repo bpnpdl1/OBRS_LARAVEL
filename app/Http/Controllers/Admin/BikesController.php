@@ -19,10 +19,10 @@ class BikesController extends Controller
     {
         //
 
-        $bikes = Bike::paginate(10);
+      
        
        
-        return view('admin.bikes.index')->with(compact('bikes'));
+        return view('admin.bikes.index');
     }
 
     /**

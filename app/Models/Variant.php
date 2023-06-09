@@ -13,4 +13,8 @@ class Variant extends Model
     public function brand(){
         return $this->belongsTo(Brand::class);
     }
+
+    public function bikes(){
+        return $this->hasMany(Bike::class);
+    }
 }

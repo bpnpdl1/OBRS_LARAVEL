@@ -36,30 +36,20 @@
   mix-blend-mode: darken;
 }
 
-
+@livewireStyles()
 
 </style>
     </head>
     <body class="font-sans antialiased">
 
-@if(Session::has('success'))
-<div id="success" class="bg-green-500 text-white p-2 w-fit rounded-md fixed top-3 right-3">
-  {{session('success')}}
-</div>
-<script>
-  $(document).ready(function(){
-  
-    $("#success").fadeOut(3000);
-});
-</script>
-@endif
+@include('layouts.successmsg')
 
 
 
         <div class="min-h-screen bg-gray-100 flex flex-row text-white min-w-screen">
           <div class="w-64 bg-black min-h-full p-6 space-y-8">
            <div>
-            Online Bike Rental System
+            {{ $companyname }}
            </div>
 
            <div class="flex flex-col">
@@ -70,7 +60,8 @@
                 <a  href="{{ route('variants.index')}}" class="hover:bg-gray-400 p-2  border-b-2 border-b-gray-200">Variants</a>
                 <a  href="{{ route('bikes.index')}}" class="hover:bg-gray-400 p-2  border-b-2 border-b-gray-200">Bikes</a>
                 <a href="{{ route('rents.index')}}" class="hover:bg-gray-400 p-2  border-b-2 border-b-gray-200">Rents</a>
-                <a class="hover:bg-gray-400 p-2  border-b-2 border-b-gray-200">Analytics</a>
+                <a href="{{ route('analytics.index') }}"  class="hover:bg-gray-400 p-2  border-b-2 border-b-gray-200">Analytics</a>
+                <a href="{{ route('company.index') }}"  class="hover:bg-gray-400 p-2  border-b-2 border-b-gray-200">Company setup</a>
 
 
            </div>
@@ -143,5 +134,6 @@
           }
 
         </script>
+        @livewireScripts()
     </body>
 </html>

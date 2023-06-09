@@ -9,4 +9,17 @@ class Rent extends Model
 {
     use HasFactory;
     protected $guarded;
+
+
+
+
+    public function bike(){
+        return $this->belongsTo(Bike::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+   
 }

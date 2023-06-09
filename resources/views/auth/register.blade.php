@@ -46,6 +46,14 @@
                     required autocomplete="password_confirmation" />
     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
 </div>
+<div class="mt-4">
+    <x-input-label for="license_number" :value="__('License Number')" />
+    <x-text-input id="password_confirmation" class="block mt-1 w-full"
+                    type="number"
+                    name="license_number"
+                    required autocomplete="license_number" />
+    <x-input-error :messages="$errors->get('license_number')" class="mt-2" />
+</div>
 
 
         
