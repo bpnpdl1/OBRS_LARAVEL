@@ -178,7 +178,9 @@
 <div>
     <h1 class="font-semibold">Payment Methods</h1>
     <div class="flex flex-row justify-center gap-3 py-1">
-        <button class="bg-slate-800 hover:bg-black text-sm px-3 py-0.5 rounded-sm text-white" wire:click="checkout">Cash on Hand</button>
+        <button class="bg-slate-800 hover:bg-black text-sm px-3 py-0.5 rounded-sm text-white" wire:click="checkout">Cash on Hand
+            <small>(Credit)</small>
+        </button>
         <button class="bg-violet-950 hovwe:bg-violet-500  text-sm px-3 py-0.5 rounded-sm text-white">Pay with Khalti</button> 
     </div>
 </div>

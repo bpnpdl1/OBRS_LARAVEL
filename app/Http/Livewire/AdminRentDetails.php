@@ -9,17 +9,12 @@ use Livewire\WithPagination;
 class AdminRentDetails extends Component
 {
     use WithPagination;
-    public  $data="djhfd",$rentalstatus,$entries=10,$rentdialog='hide',$rent1;
+    public  $data="djhfd",$paymentmethod,$entries=10,$rentdialog='hide',$rent1;
     public $rentalpayments=['status'=>'','payment_method'=>'','refund'];
     public $refundclass="hidden";
     protected $rents;
 
-public function switchtopaid($i_d){
-    
-    $rent['status']="Paid";
-    Rent::find($i_d)->update($rent);
-    
-}
+
 
 public function tooglerentdialog($id){
 
@@ -35,7 +30,19 @@ public function tooglerentdialog($id){
 }
 
 public function saverentaltransaction(){
-    dd($this->rentalpayments);
+
+
+     $data=[
+        'rental_status' => $this->rentalpayments['rental_status'],
+        'payment_method' => $this->rentalpayments['payment_method']
+     ];
+    
+    
+    Rent::find($this->rentalpayments['id'])->update($data);
+    
+    session()->flash('success','Rental and Payment Status Changed Successfully');
+    // $this->tooglerentdialog($this->rentalpayments['id']);
+    return redirect(route('rents.index'));
 }
 
 
@@ -45,8 +52,8 @@ public function showrentalrequest(){
 
     public function render()
     {
-          $rents=$this->rents=Rent::when($this->rentalstatus,function($q1){
-            $q1->where('status','=',$this->rentalstatus);
+          $rents=$this->rents=Rent::when($this->paymentmethod,function($q1){
+            $q1->where('payment_method','=',$this->paymentmethod);
           })->orderBy('id','desc')
           ->paginate($this->entries);
 

@@ -122,8 +122,10 @@ public function rented_dates($from_date, $to_date){
         $data=[
             "rent_from_date" => $request->from_date,
             "rent_to_date" => $request->to_date,
-            "status" => "Paid",
+            "rental_status" => "Approved",
             'total_rental_price'=>$total_rental_price,
+            'rental_number'=>uniqid(),
+            'payment_method'=>"Cash",
              "bike_id" => $request->bike,
              "user_id"=>$user->id
         ];

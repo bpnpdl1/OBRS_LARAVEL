@@ -59,7 +59,8 @@ class BikeDetails extends Component
         $rentbike=[
             "rent_from_date" => $this->from_date,
             "rent_to_date" => $this->to_date,
-            "status" => "Payment Pending",
+            "rental_status" => "Pending",
+            "payment_method"=>"Credit",
             'total_rental_price'=>$this->total_rental_price,
              "bike_id" => $this->bike->id,
              "user_id"=>auth()->user()->id

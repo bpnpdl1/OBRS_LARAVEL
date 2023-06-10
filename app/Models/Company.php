@@ -9,6 +9,8 @@ class Company extends Model
 {
     use HasFactory;
 
+    protected $guarded;
+
 
       public function user(){
         return $this->hasOne(User::class)->where('role','=','admin');

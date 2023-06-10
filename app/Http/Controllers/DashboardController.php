@@ -24,8 +24,8 @@ class DashboardController extends Controller
         $brands=Brand::count(); 
         $variants=Variant::count();
         $bikes=Bike::count();
-        $newrents=Rent::where('status','Payment Pending')->count();
-        $registeredrents=Rent::where('status','Paid')->count();
+        $newrents=Rent::count();
+        $registeredrents=Rent::count();
         $rents=Rent::count();
         $renters=User::where('role','renter')->count();
 
