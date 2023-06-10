@@ -53,7 +53,7 @@
             <li>{{ $rentcounts }}</li>
             <li>{{ $bike->model_year }}</li>
             <li>Bike Number Plate</li>
-            <li>View <a href="">Click me</a></li>
+            <li>View <button class="bg-gray-900 text-white py-0.5 px-3 text-sm rounded" wire:click="billbookdialog">Click me</button></li>
             
         </ul>
        </div>
@@ -63,6 +63,28 @@
    </div>
 
 </div>
+
+
+
+<div class="w-screen h-screen {{ $billbookdisplay }} top-0 right-0 backdrop-blur-sm bg-opacity-70 bg-gray-300 flex justify-center items-center">
+
+   <div class="bg-white">
+
+    <div class="bg-white rounded relative p-2">
+ <button  type="button" wire:click="billbookdialog(2)" class=" absolute top-2 right-2"> <i class="fa fa-times hover:bg-black hover:text-white rounded-full p-1" aria-hidden="true" ></i>
+   </button>
+   <p class="text-lg font-semibold p-3">BillBook View</p>
+   <hr class="h-1">
+
+   <div class="h-[400px] overflow-y-auto min-w-[600px]">
+     <img src="{{ asset($image_url) }}" alt="image"  class="w-full object-cover">
+   </div>
+</div>
+   </div>
+</div>
+
+
+
 
   
 

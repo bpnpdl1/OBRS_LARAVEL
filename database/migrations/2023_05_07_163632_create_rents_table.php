@@ -15,7 +15,7 @@ return new class extends Migration
               $table->id();
             $table->date('rent_from_date');
             $table->date('rent_to_date');
-            $table->string('status');   
+            $table->enum('rental_status',['Pending','Approved','Marked as Return','Reject']);   
             $table->string('rental_number')->default(uniqid());
             $table->foreignId('bike_id')->constrained();
             $table->foreignId('user_id')->constrained();

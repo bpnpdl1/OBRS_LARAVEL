@@ -18,7 +18,7 @@
             <label for="name">Variant Brand</label>
             <select name="brand" id="" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                 @foreach ($brands as $brand)
-                    <option  value="{{$brand['id']}}">{{$brand['brand_name']}}</option>
+                    <option  @if($variant['brand_id'==$brand['id']]) selected @endif  value="{{$brand['id']}}">{{$brand['brand_name']}}</option>
                 @endforeach
             </select>
             <x-input-error :messages="$errors->get('brand')" class="mt-2" />

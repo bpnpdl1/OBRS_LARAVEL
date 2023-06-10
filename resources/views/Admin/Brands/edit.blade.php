@@ -10,7 +10,7 @@
        <div class="flex flex-col gap-4 p-3 shadow-lg rounded-lg border border-b-2 border-gray-600">
         <div>
             <label for="name">Brand Name</label>
-            <input type="text" name="brand_name" id="name" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" value="{{$brand['name']}}">
+            <input type="text" name="brand_name" id="name" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" value="{{ $brand['brand_name']}} ">
             <x-input-error :messages="$errors->get('brand_name')" class="mt-2" />
         </div>
         <div  class="flex flex-row gap-4">

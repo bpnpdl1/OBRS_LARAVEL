@@ -42,6 +42,7 @@
             <th class="p-3">To Date</th>
             <th class="p-3">Total Rental Price</th>
             <th class="p-3">Payment Status</th>
+             <th class="p-3">Rental Status</th>
             <th class="p-3">Action</th>
           </tr>
         </thead>
@@ -56,6 +57,7 @@
             <td>{{ $rent['rent_from_date'] }}</td>
             <td>{{ $rent['rent_to_date'] }}</td>
             <td class="text-center">Rs {{ $rent['total_rental_price'] }}</td>
+          
             <td>
               <div class="text-sm flex gap-3">
                 @if ($rent['status'] == 'Available')
@@ -68,6 +70,7 @@
                 @endif
               </div>
             </td>
+                <td class="text-center"> {{ $rent->bike->status }}</td>
             <td>
              
                 <button class="bg-blue-500 text-xs text-white px-2 py-[1px] min-w-fit rounded block" title="Click here to switch payment mode to paid" wire:click="tooglerentdialog({{ $rent['id'] }})">Change status</button>
@@ -107,7 +110,7 @@
       <h2 class="text-xl font-semibold mt-4 p-3 rounded-sm">Rental Transaction Information</h2>
       <hr class="h-0.5 bg-black">
       <p class="my-3">Rental Number:  {{ $rent1->rental_number }}</p>
-    
+       <p class="my-3">Rental Status:  {{ $rent1->bike->status }}</p>
       <form wire:submit.prevent="saverentaltransaction">
 
     <div class="flex flex-col gap-3 mt-4">
@@ -119,7 +122,7 @@
            @if($rentalpayments['status']=="Paid")
           <label for="">Payment Method</label>
          <label for="">Rental Status</label>
-         <label for="">Refund Amount <br> <center><small>(Optional)</small></center></label>
+         <label for="" class=" {{ $refundclass }} ">Refund Amount <br> <center><small>(Optional)</small></center></label>
          @endif
        </div>
        <div class="flex flex-col justify-center gap-2">
@@ -136,11 +139,12 @@
        
 
          </select>
-          <select name="" id=""  class="rounded scale-90">
-            <option @if($rent1->status=="Paid") selected @endif  value="Paid">Approve on Rent</option> 
+          <select name="" id=""  class="rounded scale-90" wire:model="rentalpayments.rent_status">
+             <option @if($rent1->status=="Paid") selected @endif  value="Not Approved">Not Approved</option> 
+            <option @if($rent1->status=="Paid") selected @endif  value="Approved on">Approve on Rent</option> 
             <option @if($rent1->status=="Paid") selected @endif  value="Mark as Return">Mark as Return</option> 
          </select>
-         <input type="number" placeholder="Refund Amount"  class="rounded scale-90">
+         <input type="number" placeholder="Refund Amount" wire:model="rentalpayments.refund"  class="rounded scale-90 {{ $refundclass }}">
 
          @endif
          </div>

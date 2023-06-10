@@ -10,7 +10,8 @@ class AdminRentDetails extends Component
 {
     use WithPagination;
     public  $data="djhfd",$rentalstatus,$entries=10,$rentdialog='hide',$rent1;
-    public $rentalpayments=['status'=>'','payment_method'=>''];
+    public $rentalpayments=['status'=>'','payment_method'=>'','refund'];
+    public $refundclass="hidden";
     protected $rents;
 
 public function switchtopaid($i_d){

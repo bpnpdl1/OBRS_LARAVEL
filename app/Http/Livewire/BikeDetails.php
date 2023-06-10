@@ -11,8 +11,18 @@ class BikeDetails extends Component
 {
   
     public $bike,$rentcounts,$checkout="hide",$recommendedbikes,$from_date,$to_date,$rentaldays,$total_rental_price,$toogledialog="hide";
-    public $dateerror;
+    public $dateerror,$image_url,$billbookdisplay='hidden';
+
     
+    public function mount(){
+
+        $bike=Bike::find($this->bike['id']);
+        $this->image_url="storage/bike_images/".$bike['billbook'];
+    }
+
+    public function billbookdialog(){
+          $this->billbookdisplay="fixed";
+    }
    
     public function updated(){
       $this->calculaterentaldays();
