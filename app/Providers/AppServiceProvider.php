@@ -28,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
 
    if(isset($company)){
         view()->share('companyname', $company['name']);
+         view()->share('companyaddress', $company['address']);
+          view()->share('companyphonenumber', $company['phonenumber']);
    }else{
     view()->share('companyname', 'Bike Rental');
    }

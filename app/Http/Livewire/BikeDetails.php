@@ -18,6 +18,9 @@ class BikeDetails extends Component
 
         $bike=Bike::find($this->bike['id']);
         $this->image_url="storage/bike_images/".$bike['billbook'];
+
+        $this->from_date=session()->get('from_date');
+        $this->to_date=session()->get('to_date');
     }
 
     public function billbookdialog(){

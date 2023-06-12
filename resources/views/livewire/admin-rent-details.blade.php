@@ -18,15 +18,28 @@
           <span class="text-sm">Entries</span>
         </div>
 
-        <div class="flex gap-2 items-center">
-          <span class="text-sm">Select By Payment Status</span>
-          <select id="rental-status" name="rental-status" class="rounded bg-gray-300 flex items-center py-1" wire:model="paymentmethod">
+        <div class="flex gap-6 items-center">
+          <div>
+            <span class="text-sm">Select By Payment Method</span>
+          <select id="rental-status" name="rental-status" class="rounded bg-gray-300 flex items-center py-1 px-4" wire:model="paymentmethod">
             <option disabled>--select--</option>
             <option value="">Show all</option>
             <option value="Credit">Credit</option>
               <option value="Cash">Cash on Hand</option>
             <option value="Online">Online</option>
           </select>
+          </div>
+           <div>
+            <span class="text-sm">Select By Rental Status</span>
+          <select id="rental-status" name="rental-status" class="rounded bg-gray-300 flex items-center py-1 px-4" wire:model="rentalstatus">
+            <option disabled>--select--</option>
+            <option value="">Show all</option>
+            <option value="Pending">Pending</option>
+              <option value="Approved">Approved</option>
+              <option value="Marked_as_return">Marked as Return</option>
+            <option value="Reject">Reject</option>
+          </select>
+          </div>
           <a href="{{ route('rents.create') }}" class="bg-blue-500 text-white py-2 px-4 rounded-md">Add Rent</a>
         </div>
       </div>

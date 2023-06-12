@@ -10,7 +10,7 @@ use Livewire\WithPagination;
 class RentDetails extends Component
 {
     use WithPagination;
- public $tickettoogle="hide",$i_id,$rentalbike;
+ public $tickettoogle="hide",$i_id,$rentalbike,$rentalstatus,$paymentmethod;
  public $bikesinputs=[];
    
 
@@ -43,7 +43,15 @@ class RentDetails extends Component
         $rawrent=Rent::where('user_id','=',auth()->user()->id);
         $rents=Rent::when($this->bikesinputs,function($q){
             $q->whereIn('bike_id',$this->bikesinputs);
-        })->where('user_id','=',auth()->user()->id)->orderBy('status','asc')->paginate(10);
+        })->when($this->paymentmethod,function($q1){
+            $q1->where('payment_method','=',$this->paymentmethod);
+        }
+
+        )->when($this->rentalstatus,function($q1){
+            $q1->where('rental_status','=',$this->rentalstatus);
+        }
+
+        )->where('user_id','=',auth()->user()->id)->orderBy('rental_status','asc')->paginate(10);
        
         $bikesdata=$rawrent->groupBy('rents.bike_id')->pluck('rents.bike_id');
          

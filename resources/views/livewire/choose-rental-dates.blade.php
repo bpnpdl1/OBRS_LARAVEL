@@ -13,7 +13,7 @@
 </div>
 <div>
     <label for="">To Date</label>
-    <input type="date" min="{{ $to_min_date }}" name="from_date" id="from_date" wire:model="to_date" class="appearance-none leading-tight block bg-gray-100 rounded-md">
+    <input type="date" min="{{ $from_date }}" name="to_date" id="from_date" wire:model="to_date" class="appearance-none leading-tight block bg-gray-100 rounded-md">
 </div>
 </div>
 <div class="text-center text-sm py-0.5"><span class="text-red-500">{{ $err_msg }}</span></div>

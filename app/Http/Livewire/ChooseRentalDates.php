@@ -27,6 +27,11 @@ class ChooseRentalDates extends Component
     }
 
     public function submit(){
+
+        
+        session()->put('from_date',$this->from_date);
+        session()->put('to_date',$this->to_date);
+        
         return redirect(route('renter.showbikes'));
     }
     public function render()

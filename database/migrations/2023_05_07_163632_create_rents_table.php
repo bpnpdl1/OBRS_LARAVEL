@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('rents', function (Blueprint $table) {
-              $table->id();
+            $table->id();
             $table->date('rent_from_date');
             $table->date('rent_to_date');
             $table->enum('rental_status',['Pending','Approved','Marked_as_return','Reject']);   

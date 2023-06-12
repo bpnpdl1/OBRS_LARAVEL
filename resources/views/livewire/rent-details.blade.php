@@ -1,20 +1,49 @@
 <div class="flex flex-row gap-4 p-7 justify-center items-center min-h-[450px]">
     {{-- Be like water. --}}
 
-<div class="w-32 shadow border-black p-4">
+<div class="w-60 shadow border-black p-4">
     <p class=" text-2xl font-normal">Filters</p>
     <hr class="h-[2px] bg-black ">
-    <ul>
-        <p class="text-lg font-thin">Bikes</p>
+    <div>
+       <div>
+         <p class="text-lg font-thin">Bikes</p>
         <hr>
         @foreach ($bikes as $bike)
-            <li><p><input type="checkbox" wire:model="bikesinputs" value="{{ $bike->id }}"> {{ $bike->number_plate }}</p></li>
+            <p><input type="checkbox" wire:model="bikesinputs" value="{{ $bike->id }}"> {{ $bike->number_plate }}</p>
         @endforeach
-    </ul>
+       </div>
+
+        <div>
+         <p class="text-lg font-thin">Rental Status</p>
+        <hr>
+        <select name="" id="" class=" rounded min-w-full" wire:model="rentalstatus">
+            <option value="">Show all</option>
+           
+            <option value="Pending">Pending</option>
+            <option value="Approved">Approved</option>
+             <option value="Marked_as_return">Marked as Rent</option>
+             <option value="Reject">Reject</option>
+        </select>
+       </div>
+
+        <div>
+         <p class="text-md font-thin">Payment Method</p>
+        <hr>
+       
+        <select name="" id="" class=" rounded min-w-full" wire:model="paymentmethod">
+             <option value="">Show all</option>
+            <option value="Credit">Credit</option>
+            <option value="Cash">Cash</option>
+            <option value="Online">Online</option>
+        </select>
+       </div>
+
+    </div>
 
   
 </div>
 <div class="flex-1">
+
     
 
     <table class="divide-y divide-gray-500 min-w-full border-[1px] border-gray-500 p-2 ">
@@ -24,9 +53,11 @@
             <th class="p-1 font-semibold border-separate ">Rental Bike number</th>
             <th class="p-3 font-semibold border-separate ">From date</th>
             <th class="p-3 font-semibold border-separate ">To date</th>
+            <th class="p-3 font-semibold border-separate ">Booked on</th>
             <th class="p-3 font-semibold border-separate ">Rental Days</th>
             <th class="p-3 font-semibold border-separate ">Rent Price per day</th>
             <th class="p-3 font-semibold border-separate ">Total Rental Price</th>
+            <th class="p-3 font-semibold border-separate ">Payment Method</th>
             <th class="p-3 font-semibold border-separate ">Rent Status</th>
             <th class="p-3 font-semibold border-separate ">Download ticket</th>
         </tr>
@@ -36,18 +67,20 @@
             <tr class="divide-x divide-gray-500 text-center">
             <td>{{ $loop->iteration }}</td>
             <td>{{ $rent->bike->number_plate }}</td>
-            <td>{{ $rent->rent_from_date }}</td>
-             <td>{{ $rent->rent_to_date }}</td>
+            <td class="w-24">{{ $rent->rent_from_date }}</td>
+             <td class="w-24">{{ $rent->rent_to_date }}</td>
+             <td class="w-24">
+                
+           {{  $rent->created_at->format('Y-m-d')}}
+            </td>
              <td>{{ $rent->total_rental_price/$rent->bike->variant->variant_rental_price}}</td>
             <td>{{ $rent->bike->variant->variant_rental_price }}</td>
              <td>{{ $rent->total_rental_price}}</td>
+             <td>{{ $rent->payment_method}}</td>
             <td class="text-center">
-               @if($rent->status=="Payment Pending")
-               <span class="bg-yellow-400 text-slate-100 text-sm py-0.5 px-3 rounded-2xl "> {{ $rent->status }}</span>
-               @endif
-                @if($rent->status=="Paid")
-               <span class="bg-green-400 text-slate-100 text-sm py-0.5 px-3 rounded-2xl "> {{ $rent->status }}</span>
-               @endif
+               
+               <span class="text-sm py-0.5 px-3 rounded-2xl "> {{ $rent->rental_status }}</span>
+             
             </td>
             <td class="text-center p-3"><Button class="text-sm bg-slate-800 text-white rounded-lg  px-3 py-0.5" wire:click="tickettoogle({{ $rent->id }})">Click Here </Button></td>
           
@@ -74,9 +107,9 @@
             <button class="bg-slate-600 py-1 px-3 text-sm m-2 text-white rounded " wire:click="exportpdf">Export as PDF</button>
         </div>
         <div class="text-sm text-center">
-            <p>Company Name</p>
-            <p>Company Address</p>
-            <p>Company Location</p>
+            <p>{{ $companyname }}</p>
+            <p>{{ $companyphonenumber }}</p>
+            <p>{{ $companyaddress }}</p>
         </div>
 
         <hr class="h-0.5 bg-gray-800">
@@ -101,6 +134,7 @@
         <div class="flex flex-col place-items-end justify-center text-sm">
              <p>Renter Name: {{ $rentalbike->user->name  }}</p>
             <p>Booked on : {{ $rentalbike->created_at->format('Y-m-d') }}</p>
+               <p class="font-semibold text-md">Rental Number : {{ $rentalbike->rental_number }}</p>
            <img src="{{ asset('storage/variant_images/'.$rentalbike->bike->variant->variant_image)}}" alt="image" class="h-52 object-cover border-0.5 border-black rounded scale-75">
         </div>
 

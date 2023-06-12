@@ -14,11 +14,11 @@
         <div class="flex flex-row gap-4 justify-center">
             <div >
                 <p>From date</p>
-                <input type="date" name="" id="" class="w-[100%] bg-slate-200 rounded" wire:model="from_date">
+                <input type="date" min="{{ date('Y-m-d') }}" name="" id="" class="w-[100%] bg-slate-200 rounded" wire:model="from_date" value="{{ $from_date }}">
             </div>
             <div>
                 <p>To date</p>
-                <input type="date" name="" id="" class="w-[100%] bg-slate-200 rounded" wire:model="to_date">
+                <input type="date" name="" id="" class="w-[100%] bg-slate-200 rounded" wire:model="to_date" value="{{ $to_date }}">
             </div>
         </div>
     @if ($dateerror)
@@ -156,7 +156,7 @@
     <li>From date:</li>
     <li>To date:</li>
     <li>Rental price:</li>
-    <li>Rental Days:</li>
+    <li>Rental Days: </li>
     <li>Total Rental Price :</li>
      </ul>
     </div>

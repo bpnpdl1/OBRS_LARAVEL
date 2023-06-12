@@ -11,7 +11,7 @@ class AdminRentDetails extends Component
     use WithPagination;
     public  $data="djhfd",$paymentmethod,$entries=10,$rentdialog='hide',$rent1;
     public $rentalpayments=['status'=>'','payment_method'=>'','refund'];
-    public $refundclass="hidden";
+    public $refundclass="hidden",$rentalstatus=[];
     protected $rents;
 
 
@@ -54,6 +54,8 @@ public function showrentalrequest(){
     {
           $rents=$this->rents=Rent::when($this->paymentmethod,function($q1){
             $q1->where('payment_method','=',$this->paymentmethod);
+          })->when($this->rentalstatus,function($q1){
+            $q1->where('rental_status','=',$this->rentalstatus);
           })->orderBy('id','desc')
           ->paginate($this->entries);
 
