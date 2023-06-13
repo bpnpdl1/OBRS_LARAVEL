@@ -15,6 +15,7 @@ class RevenveChart extends Component
     {
 
         //
+        $this->month = date('Y-m');
         $this->rents = Rent::selectRaw('DATE(created_at) AS rental_date, SUM(total_rental_price) AS total_rental_price')
             ->where(DB::raw('DATE(created_at)'), 'LIKE', "$this->month%")
             ->groupBy(DB::raw('DATE(created_at)'))

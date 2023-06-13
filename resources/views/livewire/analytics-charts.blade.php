@@ -1,32 +1,39 @@
-   <div class="flex flex-col m-2">
+   <div class="flex flex-col m-2 gap-3">
        {{-- Success is as dangerous as failure. --}}
 
 
        <div class="flex flex-row ">
-           <div class="flex flex-col flex-1">
-               <div class="flex flex-row justify-between w-full bg-red-300">
-                   <p>Rental Report</p>
+           <div class="flex flex-col justify-between flex-1">
+               <div class="flex flex-row justify-between items-center w-full ">
+                   <p class="font-semibold text-2xl">Rental Report</p>
                    <input type="month" class="rounded" max="{{ $month }}" value="{{ $month }}"
                        onchange="changemonth(this.value)">
                </div>
-               <div class="">
-                   <p>Added Bikes: </p>
-                   <p>Total Renenve: </p>
-                   <p> Total Rents: </p>
+               <div class=" flex-1 flex flex-row justify-around items-center">
+                   <div class="bg-slate-800 text-white rounded text-center p-10">
+                       <p class="font-semibold text-xl  ">Number of Bikes Added: </p>
+                       <p id="count_bike" class="font-semibold">{{ $bikecounts }}</p>
+                   </div>
+                   <div class="bg-slate-800 rounded text-center text-white  p-10">
+                       <p class="font-semibold text-xl  "> Total Rents: </p>
+                       <p id="count_rent" class="font-semibold">{{ $totalrents }}</->
+                   </div>
+
+
                </div>
            </div>
            <x-doughnut-chart idvalue="Credit" :month="$month" />
        </div>
 
-
-       <div class="" class="grid grid-rows-2  justify-between flex-1 bg-red-500">
+       <div class="flex flex-row gap-6  min-w-full justify-between flex-1 my-10">
            {{-- <x-variants-chart idvalue="revenue" :month="$month" /> --}}
 
 
-           <livewire:variants-chart :getmonth="$month" demo="jahdgdsjhgds" />
-           {{-- <x-revenve-chart :month="$month" /> --}}
-           <p>{{ $month }}</p>
-           @livewire('revenve-chart', ['month' => $month])
+           <livewire:variants-chart />
+           <livewire:revenve-chart />
+
+
+           {{-- @livewire('revenve-chart') --}}
 
 
 
@@ -35,6 +42,11 @@
 
 
        <script>
+           var bike_count = document.getElementById('count_bike');
+           var rent_count = document.getElementById('count_rent');
+
+
+
            function changemonth(month) {
 
                var postData = {
@@ -57,6 +69,10 @@
                        let total_revenve = response[3][1];
                        let revenve = response[3][0];
 
+                       let countbike = response[4][1];
+                       let countrent = response[4][0];
+
+
                        variantchart.data.labels = variants_names;
                        variantchart.data.datasets[0].data = variants_counts;
 
@@ -68,6 +84,10 @@
 
                        let totalrevenve = document.getElementById('totalrevenve');
                        totalrevenve.innerText = "Total Revenve: " + total_revenve;
+
+                       rent_count.innerText = countrent;
+                       bike_count.innerText = countbike;
+
 
 
 

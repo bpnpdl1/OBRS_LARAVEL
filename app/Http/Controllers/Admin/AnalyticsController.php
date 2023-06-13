@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Livewire\Bikes;
 use App\Models\Bike;
 use App\Models\Rent;
 use Illuminate\Http\Request;
@@ -16,12 +17,21 @@ class AnalyticsController extends Controller
     public function index()
     {
         //
-        return view('Admin.Analytics.index');
+        $bikecounts = $this->bikes('2023-06');
+
+        return view('Admin.Analytics.index', compact('bikecounts'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
+
+    public function bikes($month)
+    {
+        $bikes = Bike::where('created_at', 'LIKE', "$month%")->count();
+
+        // dd($bikes);
+    }
 
 
 
@@ -63,11 +73,18 @@ class AnalyticsController extends Controller
         $totalcounts = $revenve->sum('total_rental_price');
 
 
+        $countsbike = Bike::where('created_at', 'LIKE', "$month%")->count();
+        $countrent = Rent::where('created_at', 'LIKE', "$month%")->count();
+
+        $monthcount = [$countrent, $countsbike];
+
+
+
 
         $variant_revenve = [$dates, $total_rental_price];
         $totalrevenve = [[$creditcount, $cashcount, $onlinecount], $totalcounts];
         $variants = [$variant_counts, $variant_names];
-        $response = [$month, $variants, $variant_revenve, $totalrevenve];
+        $response = [$month, $variants, $variant_revenve, $totalrevenve, $monthcount];
 
 
         return response()->json($response);

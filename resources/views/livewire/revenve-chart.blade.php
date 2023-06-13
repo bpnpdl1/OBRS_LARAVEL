@@ -1,8 +1,7 @@
-<div>
-    {{ $month }}
-    <div style="width: 70vw;height: 400px;" class="flex justify-center items-center m-3">
-        <canvas id="dfds" style="width: inherit; height: inherit;"></canvas>
-    </div>
+<div class="w-[50%] hover:scale-110 rounded shadow-md bg-white">
+
+    <canvas id="dfds"></canvas>
+
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -17,7 +16,7 @@
                     label: 'Revenue of this month',
                     data: @json($total_rental_price),
                     backgroundColor: '#708090',
-                    borderWidth: 3.5
+                    borderWidth: 2
                 }]
             },
             options: {

@@ -17,6 +17,7 @@ class VariantsChart extends Component
     {
 
 
+        $this->month = date('Y-m');
 
 
         $results = Bike::join('variants', 'bikes.variant_id', '=', 'variants.id')

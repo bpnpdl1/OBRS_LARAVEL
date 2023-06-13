@@ -1,5 +1,5 @@
-<div>
-    <p>{{ $month }} jsfdkj</p>
+<div class="w-[50%] hover:scale-110 rounded shadow-md bg-white">
+
 
     <canvas id="variantcounts"></canvas>
 
@@ -8,7 +8,6 @@
         const labels = @json($variant_names);
         const data = @json($variant_counts);
 
-        console.log(data);
 
         // Get the chart canvas element
         const variantcounts = document.getElementById('variantcounts').getContext('2d');
@@ -21,8 +20,8 @@
                 datasets: [{
                     label: 'Variants Rent Counts',
                     data: data,
-                    backgroundColor: 'rgba(75, 192, 192, 0.8)', // Set the bar color
-                    borderColor: 'rgba(75, 192, 192, 1)', // Set the border color
+                    backgroundColor: '#708090', // Set the bar color
+                    borderColor: '#708099', // Set the border color
                     borderWidth: 1
                 }]
             },

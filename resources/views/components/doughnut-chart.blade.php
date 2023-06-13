@@ -1,4 +1,4 @@
-<div class="scale-95">
+<div class="scale-90">
     <!-- Simplicity is the ultimate sophistication. - Leonardo da Vinci -->
     <div class="bg-white rounded shadow ">
 

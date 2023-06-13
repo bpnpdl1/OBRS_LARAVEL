@@ -11,5 +11,5 @@
 
 
 
-    <livewire:analytics-charts />
+    <livewire:analytics-charts :bikecounts="$bikecounts" />
 @endsection
