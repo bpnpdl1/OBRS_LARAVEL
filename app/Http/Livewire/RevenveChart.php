@@ -1,25 +1,22 @@
 <?php
 
-namespace App\View\Components;
+namespace App\Http\Livewire;
 
 use App\Models\Rent;
-use Closure;
-use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
-use Illuminate\View\Component;
+use Livewire\Component;
 
 class RevenveChart extends Component
 {
-    /**
-     * Create a new component instance.
-     */
     public $dates = [], $revenve = [], $rents, $total_rental_price = [], $month;
-    public function __construct($month)
+
+
+    public function mount()
     {
-        $this->month = $month;
+
         //
         $this->rents = Rent::selectRaw('DATE(created_at) AS rental_date, SUM(total_rental_price) AS total_rental_price')
-            ->where(DB::raw('DATE(created_at)'), 'LIKE', "$month%")
+            ->where(DB::raw('DATE(created_at)'), 'LIKE', "$this->month%")
             ->groupBy(DB::raw('DATE(created_at)'))
             ->get();
 
@@ -27,12 +24,8 @@ class RevenveChart extends Component
         $this->total_rental_price = $this->rents->pluck('total_rental_price')->toArray();
         $this->dates = $this->rents->pluck('rental_date')->toArray();
     }
-
-    /**
-     * Get the view / contents that represent the component.
-     */
-    public function render(): View|Closure|string
+    public function render()
     {
-        return view('components.revenve-chart');
+        return view('livewire.revenve-chart');
     }
 }

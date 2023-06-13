@@ -23,7 +23,7 @@ class VariantsChart extends Component
         $results = Bike::join('variants', 'bikes.variant_id', '=', 'variants.id')
             ->join('rents', 'bikes.id', '=', 'rents.bike_id')
             ->select('variants.variant_name', DB::raw('COUNT(variants.variant_name) AS variant_count'))
-            ->where('bikes.created_at', 'LIKE', "%$month%")
+            ->where('bikes.created_at', 'LIKE', "$month%")
             ->groupBy('variants.variant_name')
             ->get();
 

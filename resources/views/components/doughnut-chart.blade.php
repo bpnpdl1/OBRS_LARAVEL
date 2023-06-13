@@ -2,8 +2,7 @@
     <!-- Simplicity is the ultimate sophistication. - Leonardo da Vinci -->
     <div class="bg-white rounded shadow ">
 
-        <p class="text-center">Total Revenve: {{ $totalcounts }}</p>
-        {{ $month }}
+        <p class="text-center" id="totalrevenve">Total Revenve: {{ $totalcounts }}</p>
 
         <div>
             <canvas id="{{ $idvalue }}" style="width: 100%;height: 100%;"></canvas>
@@ -15,13 +14,13 @@
     <script>
         const {{ $idvalue }} = document.getElementById("{{ $idvalue }}");
 
-        new Chart({{ $idvalue }}, {
+        let Revenvedoughnut = new Chart({{ $idvalue }}, {
             type: 'doughnut',
             data: {
                 labels: [
-                    "Credit Transactions",
-                    'Cash Transactions',
-                    'Online Transactions'
+                    "Credit Revenve",
+                    'Cash Revenve',
+                    'Online Revenve'
                 ],
                 datasets: [{
 
