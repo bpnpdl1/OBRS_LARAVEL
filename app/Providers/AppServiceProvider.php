@@ -23,16 +23,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
-   $company=Company::first();
+        // $company = Company::first();
 
 
-   if(isset($company)){
-        view()->share('companyname', $company['name']);
-         view()->share('companyaddress', $company['address']);
-          view()->share('companyphonenumber', $company['phonenumber']);
-   }else{
-    view()->share('companyname', 'Bike Rental');
-   }
-
+        if (isset($company)) {
+            view()->share('companyname', $company['name']);
+            view()->share('companyaddress', $company['address']);
+            view()->share('companyphonenumber', $company['phonenumber']);
+        } else {
+            view()->share('companyname', 'Bike Rental');
+        }
     }
 }
