@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->date('rent_from_date');
             $table->date('rent_to_date');
-            $table->enum('rental_status',['Pending','Approved','Marked_as_return','Reject']);   
-            $table->string('rental_number')->default('123');
+            $table->string('status');
+            $table->string('rental_number')->default(uniqid());
             $table->foreignId('bike_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->integer('total_rental_price');
-             $table->enum('payment_method',['Online','Cash','Credit'])->default('Credit');
+            $table->enum('payment_method', ['Online', 'Cash on Hand', 'Credit'])->default('Credit');
             $table->timestamps();
         });
     }
