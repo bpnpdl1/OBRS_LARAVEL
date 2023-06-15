@@ -11,8 +11,8 @@ class Brand extends Model
     protected $guarded;
 
 
-    public function variant(){
+    public function variant()
+    {
         return $this->hasMany(Variant::class);
     }
-    
 }
