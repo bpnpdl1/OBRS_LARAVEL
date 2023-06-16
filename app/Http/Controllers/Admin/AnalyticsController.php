@@ -68,7 +68,7 @@ class AnalyticsController extends Controller
         $revenve = Rent::where('rents.created_at', 'LIKE', "$month%")->get();
         $creditcount = $revenve->where('payment_method', '=', 'Credit')->sum('total_rental_price');
         $onlinecount = $revenve->where('payment_method', '=', 'Online')->sum('total_rental_price');
-        $cashcount = $revenve->where('payment_method', '=', 'Cash')->sum('total_rental_price');
+        $cashcount = $revenve->where('payment_method', '=', 'Cash on Hand')->sum('total_rental_price');
 
         $totalcounts = $revenve->sum('total_rental_price');
 

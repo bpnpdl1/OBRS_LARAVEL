@@ -15,6 +15,7 @@ use App\Models\Brand;
 use App\Models\Rent;
 use App\Models\Variant;
 use Dompdf\Adapter\PDFLib;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
@@ -109,6 +110,7 @@ Route::get('/test', function () {
     // return view('frontend.partials.rentalticket',compact('rentalbike','rent'));
 });
 
+// Auth::routes(['verify' => true]);
 
 
 

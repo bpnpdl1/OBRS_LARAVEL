@@ -24,7 +24,7 @@ class DoughnutChart extends Component
         $revenve = Rent::where('rents.created_at', 'LIKE', "$month%")->get();
         $this->creditcount = $revenve->where('payment_method', '=', 'Credit')->sum('total_rental_price');
         $this->onlinecount = $revenve->where('payment_method', '=', 'Online')->sum('total_rental_price');
-        $this->cashcount = $revenve->where('payment_method', '=', 'Cash')->sum('total_rental_price');
+        $this->cashcount = $revenve->where('payment_method', '=', 'Cash on Hand')->sum('total_rental_price');
 
         $this->totalcounts = $revenve->sum('total_rental_price');
         $this->counts = [$this->creditcount, $this->cashcount, $this->onlinecount];

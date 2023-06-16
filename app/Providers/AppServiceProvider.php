@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
-        // $company = Company::first();
+        $company = Company::first();
 
 
         if (isset($company)) {

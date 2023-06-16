@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $guarded;
+  protected $guarded;
 
 
-      public function user(){
-        return $this->hasOne(User::class)->where('role','=','admin');
-    }
+  public function user()
+  {
+    return $this->hasOne(User::class)->where('role', '=', 'admin');
+  }
 }

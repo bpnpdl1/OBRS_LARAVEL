@@ -20,12 +20,12 @@ class RentsController extends Controller
     public function index()
     {
         //
-       
-      
+
+
         return view('admin.rents.index');
     }
-    
-  
+
+
 
 
     /*
@@ -33,70 +33,73 @@ class RentsController extends Controller
     
     */
 
-   
-public function rented_dates($from_date, $to_date){
-    $rented_dates = [];
 
-    $current_date = Carbon::parse($from_date);
-    $end_date = Carbon::parse($to_date);
+    public function rented_dates($from_date, $to_date)
+    {
+        $rented_dates = [];
 
-    for ($i = $current_date; $i <= $end_date; $i->addDay()) {
-        $rented_dates[] = $i->format('Y-m-d');
+        $current_date = Carbon::parse($from_date);
+        $end_date = Carbon::parse($to_date);
+
+        for ($i = $current_date; $i <= $end_date; $i->addDay()) {
+            $rented_dates[] = $i->format('Y-m-d');
+        }
+
+        return $rented_dates;
     }
-
-    return $rented_dates;
-}
 
 
 
     /**
      * Show the form for creating a new resource.
      */
-    
+
     public function create()
     {
         //
-       
-       
-        $brands=Brand::all();
-        return view('admin.rents.create',compact('brands'));
+
+
+        $brands = Brand::all();
+        return view('admin.rents.create', compact('brands'));
     }
 
-    public function getVariant(Request $request){
-        
-        $data=Variant::all()->where('brand_id','=',$request->brand_id);
-         $variants=$data->toArray();
-      
-     
-      return response()->json($variants);
+    public function getVariant(Request $request)
+    {
+
+        $data = Variant::all()->where('brand_id', '=', $request->brand_id);
+        $variants = $data->toArray();
+
+
+        return response()->json($variants);
     }
 
-    public function getRentalDates(Request $request){
-        $rental_dates=Rent::all()->where('bike_id','=',$request->bike_id);
-        $rental_dates=$rental_dates->toArray();
+    public function getRentalDates(Request $request)
+    {
+        $rental_dates = Rent::all()->where('bike_id', '=', $request->bike_id);
+        $rental_dates = $rental_dates->toArray();
 
 
-        
-        
+
+
 
         return response()->json($rental_dates);
-
     }
 
 
-    public function getBike(Request $request){
-        
+    public function getBike(Request $request)
+    {
+
         // $data=Bike::all()->where('variant_id','=',$request->variant_id);
-        $data=Bike::join('variants','variants.id','=','bikes.variant_id')
-        ->select('bikes.*','variants.variant_rental_price')->where('variant_id','=',$request->variant_id)->get();
+        $data = Bike::join('variants', 'variants.id', '=', 'bikes.variant_id')
+            ->select('bikes.*', 'variants.variant_rental_price')->where('variant_id', '=', $request->variant_id)->get();
 
-      
 
-       
-      $bikes=$data->toArray();
-       
 
-      return response()->json($bikes);
+
+        $bikes = $data->toArray();
+
+
+        return response()->json($bikes);
     }
 
     /**
@@ -107,35 +110,34 @@ public function rented_dates($from_date, $to_date){
         //total_rental_price
         //
 
-        $variants=Variant::find($request->variant);
+        $variants = Variant::find($request->variant);
 
-        $from_date=Carbon::createFromDate($request->from_date);
-         $to_date=Carbon::createFromDate($request->to_date);
+        $from_date = Carbon::createFromDate($request->from_date);
+        $to_date = Carbon::createFromDate($request->to_date);
 
-        $rental_days=$to_date->diffInDays($from_date);
-        $total_rental_price=$variants['variant_rental_price']*$rental_days;
-       
+        $rental_days = $to_date->diffInDays($from_date);
+        $total_rental_price = $variants['variant_rental_price'] * $rental_days;
 
 
-        $user=User::all()->where('email','=',$request->email)[0];
-        
-        $data=[
+
+        $user = User::all()->where('email', '=', $request->email)[0];
+
+        $data = [
             "rent_from_date" => $request->from_date,
             "rent_to_date" => $request->to_date,
             "rental_status" => "Approved",
-            'total_rental_price'=>$total_rental_price,
-            'rental_number'=>uniqid(),
-            'payment_method'=>"Cash",
-             "bike_id" => $request->bike,
-             "user_id"=>$user->id
+            'total_rental_price' => $total_rental_price,
+            'rental_number' => uniqid(),
+            'payment_method' => "Cash on Hand",
+            "bike_id" => $request->bike,
+            "user_id" => $user->id
         ];
 
-        $bike['status']="On Rent";
+        $bike['status'] = "On Rent";
         Bike::find($request->bike)->update($bike);
 
         Rent::create($data);
-        return redirect(route('rents.index'))->with('success','Bike Added on rent Successfully');
-
+        return redirect(route('rents.index'))->with('success', 'Bike Added on rent Successfully');
     }
 
     /**
