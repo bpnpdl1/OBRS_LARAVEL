@@ -10,6 +10,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Renter\RenterController;
 use App\Http\Livewire\BikeCatalogue;
+use App\Mail\MyMailClass;
+use App\Mail\SampleMail;
 use App\Models\Bike;
 use App\Models\Brand;
 use App\Models\Rent;
@@ -17,6 +19,9 @@ use App\Models\Variant;
 use Dompdf\Adapter\PDFLib;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+
+use App\Mail\TextMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\File;
@@ -41,6 +46,9 @@ Route::get('/', function () {
 
 
 Route::get('/noaccess', function () {
+
+
+
 
     return view('noaccess.noaccess');
 })->name('no-access');
