@@ -19,9 +19,9 @@ class BikesController extends Controller
     {
         //
 
-      
-       
-       
+
+
+
         return view('admin.bikes.index');
     }
 
@@ -31,7 +31,7 @@ class BikesController extends Controller
     public function create()
     {
         //
-        $variants=Variant::all();
+        $variants = Variant::all();
         return view('admin.bikes.create')->with(compact('variants'));
     }
 
@@ -41,28 +41,28 @@ class BikesController extends Controller
     public function store(Request $request)
     {
         //
-    $request->validate([
-          'number_plate'=>'required',
-          'cc'=>'required',
-          'status'=>'required',
-          'variant'=>'required',
-    ]);
+        $request->validate([
+            'number_plate' => 'required',
+            'cc' => 'required',
+            'status' => 'required',
+            'variant' => 'required',
+        ]);
 
-        $path=Storage::disk('public')->put('bike_images',$request->file('image'));
-        $path=str_replace('bike_images/','',$path);
- 
-        $data=[
-            'number_plate'=>$request['number_plate'],
-            'cc'=>$request['cc'],
-            'variant_id'=>$request['variant'],
-            'status'=>$request['status'],
-            'model_year'=>$request['model_year'],
-            'billbook'=>$path
+        $path = Storage::disk('public')->put('bike_images', $request->file('image'));
+        $path = str_replace('bike_images/', '', $path);
+
+        $data = [
+            'number_plate' => $request['number_plate'],
+            'cc' => $request['cc'],
+            'variant_id' => $request['variant'],
+            'status' => $request['status'],
+            'model_year' => $request['model_year'],
+            'billbook' => $path
         ];
-      
+
         Bike::create($data);
-        $success="New Bike Added Successfully";
-        return redirect(route('bikes.index'))->with('success',$success);
+        $success = "New Bike Added Successfully";
+        return redirect(route('bikes.index'))->with('success', $success);
     }
 
     /**
@@ -79,12 +79,11 @@ class BikesController extends Controller
     public function edit(string $id)
     {
         //
-        $variants=Variant::all();
-        $bike=Bike::find($id);
+        $variants = Variant::all();
+        $bike = Bike::find($id);
         // $bikes = Variants::join('bike', 'variants.id', '=', 'bikes.variants_id')->join('brands','brands.id','=','variants.brand_id')->get();
-       
-        return view('admin.bikes.edit')->with(compact('variants','bike'));
 
+        return view('admin.bikes.edit')->with(compact('variants', 'bike'));
     }
 
     /**
@@ -93,47 +92,43 @@ class BikesController extends Controller
     public function update(Request $request, string $id)
     {
         //
-         $request->validate([
-          'number_plate'=>'required',
-          'cc'=>'required',
-          'status'=>'required',
-          'variant'=>'required',
-          'billbook'=>'nullable|image'
-    ]);
+        $request->validate([
+            'number_plate' => 'required',
+            'cc' => 'required',
+            'status' => 'required',
+            'variant' => 'required',
+            'billbook' => 'nullable|image'
+        ]);
 
 
 
-    $bike=Bike::find($id);
-   
-      
-        $data=[
-            'number_plate'=>$request['number_plate'],
-            'cc'=>$request['cc'],
-            'variant_id'=>$request['variant'],
-            'status'=>$request['status'],
-            'model_year'=>$request['model_year']
+        $bike = Bike::find($id);
+
+
+        $data = [
+            'number_plate' => $request['number_plate'],
+            'cc' => $request['cc'],
+            'variant_id' => $request['variant'],
+            'status' => $request['status'],
+            'model_year' => $request['model_year']
         ];
 
-         
 
-        $file=(array)$request->file('billbook');
 
-           if(!empty($file)){
+        $file = (array)$request->file('billbook');
 
-           
-            $path=Storage::disk('public')->put('bike_images',$request->file('billbook'));
-            Storage::disk('public')->delete('bike_images/'.$bike['billbook']);
-            $path=str_replace('bike_images/','',$path);
-            
-            $data=['billbook'=>$path];
+        if (!empty($file)) {
 
-          
- 
-                 }
-           Bike::find($id)->update($data);
-     
-        return redirect(route('bikes.index'))->with('success','Bike Details Updated Successfully');
-        
+
+            $path = Storage::disk('public')->put('bike_images', $request->file('billbook'));
+            Storage::disk('public')->delete('bike_images/' . $bike['billbook']);
+            $path = str_replace('bike_images/', '', $path);
+
+            $data = ['billbook' => $path];
+        }
+        Bike::find($id)->update($data);
+
+        return redirect(route('bikes.index'))->with('success', 'Bike Details Updated Successfully');
     }
 
     /**
@@ -142,10 +137,10 @@ class BikesController extends Controller
     public function destroy(Request $request)
     {
         //
-       $bike_id=$request->bike_id;   
-       $bike=Bike::find($bike_id);
-       $bike->delete();
-      
-       return redirect(route('bikes.index'))->with('success','Bike Detail Deleted Successfully');
+        $bike_id = $request->bike_id;
+        $bike = Bike::find($bike_id);
+        $bike->delete();
+
+        return redirect(route('bikes.index'))->with('success', 'Bike Detail Deleted Successfully');
     }
 }

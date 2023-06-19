@@ -2,9 +2,12 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\TicketMail;
 use App\Models\Bike;
 use App\Models\Rent;
+use App\View\Components\RentTicket;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class BikeDetails extends Component
@@ -36,7 +39,11 @@ class BikeDetails extends Component
 
     public function billbookdialog()
     {
-        $this->billbookdisplay = "fixed";
+        if ($this->billbookdisplay == "fixed") {
+            $this->billbookdisplay = "hidden";
+        } elseif ($this->billbookdisplay == "hidden") {
+            $this->billbookdisplay = "fixed";
+        }
     }
 
     public function updated()
@@ -87,6 +94,7 @@ class BikeDetails extends Component
         Rent::create($rentbike);
         $bike['status'] = "On Rent";
         Bike::find($this->bike->id)->update($bike);
+
 
         $msg = 'Bike Added on rent Successfully. Please come with rental ticket to take bike on rent';
         return redirect(route('renter.rent.details'))->with('success', $msg);

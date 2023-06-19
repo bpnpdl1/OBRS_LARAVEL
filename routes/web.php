@@ -9,23 +9,17 @@ use App\Http\Controllers\Admin\VariantsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Renter\RenterController;
-use App\Http\Livewire\BikeCatalogue;
-use App\Mail\MyMailClass;
-use App\Mail\SampleMail;
-use App\Models\Bike;
+use Illuminate\Http\Request;
+use App\Mail\ObrsMail;
 use App\Models\Brand;
 use App\Models\Rent;
-use App\Models\Variant;
-use Dompdf\Adapter\PDFLib;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-
-use App\Mail\TextMail;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\SampleMail;
+use App\Mail\TicketMail;
+use App\Mail\WelcomeMail;
+use App\Models\Bike;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\File;
-use Mpdf\Mpdf;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +37,12 @@ Route::get('/', function () {
     $brands = Brand::all();
     return view('home', compact('brands'));
 })->name('home');
+
+Route::get('/showmail', function () {
+
+
+    return view('emails.rentalstatusmail');
+});
 
 
 Route::get('/noaccess', function () {
@@ -102,7 +102,28 @@ Route::middleware(['auth', 'isadmin', 'verified'])->group(function () {
 Route::get('/showbikes', [RenterController::class, 'index'])->name('renter.showbikes');
 Route::post('/bikedetails', [RenterController::class, 'bikedetails'])->name('renter.bikedetails');
 Route::get('/rentdetails', [RenterController::class, 'rentdetails'])->name('renter.rent.details');
+Route::post('/khaltirent', function (Request $request) {
 
+    $rentbike = [
+        "rent_from_date" => $request->from_date,
+        "rent_to_date" => $request->to_date,
+        "rental_status" => "Pending",
+        "payment_method" => "Online",
+        'total_rental_price' => $this->total_rental_price,
+        "bike_id" => $request->bike->id,
+        "user_id" => auth()->user()->id
+    ];
+
+
+
+
+    Rent::create($rentbike);
+    $bike['status'] = "On Rent";
+    Bike::find($this->bike->id)->update($bike);
+
+
+    return response()->json($request->toArray());
+})->name('khaltirent');
 
 
 

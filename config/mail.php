@@ -37,13 +37,18 @@ return [
 
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+            'host' => env('MAIL_HOST', 'smtp.google.com'),
             'port' => env('MAIL_PORT', 587),
             'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD'),
+            'username' => env('MAIL_USERNAME', 'bipinpaudel6774@gmail.com'),
+            'password' => env('MAIL_PASSWORD', 'etfzuqcnzrmygpqv'),
             'timeout' => null,
-            'local_domain' => env('MAIL_EHLO_DOMAIN'),
+            'auth_mode' => null,
+        ],
+
+        'from' => [
+            'address' => env('MAIL_FROM_ADDRESS', 'bipinpaudel6774@gmail.com'),
+            'name' => env('MAIL_FROM_NAME', env('APP_NAME')),
         ],
 
         'ses' => [
@@ -99,8 +104,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'bipinpaudel6774@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'OBRS'),
     ],
 
     /*

@@ -120,11 +120,13 @@
 
         <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur-sm flex flex-row justify-center items-center">
 
-            <div class="bg-white rounded shadow-md shadow-slate-700 p-4 relative">
+
+            <div class="bg-white rounded shadow-md shadow-slate-700 p-4 relative {{ $display }}">
                 <button wire:click="tooglerentdialog(2)"> <i
                         class="fa fa-times hover:bg-black hover:text-white p-1 rounded-full absolute top-2 right-2"
                         aria-hidden="true">cancel</i>
                 </button>
+
                 <h2 class="text-xl font-semibold mt-4 p-3 rounded-sm">Rental Transaction Information</h2>
                 <hr class="h-0.5 bg-black">
                 <p class="my-3">Rental Number: {{ $rent1->rental_number }}</p>
@@ -146,7 +148,7 @@
                             </div>
                             <div class="flex flex-col justify-center gap-2">
                                 <select name="" id="" class="rounded scale-90"
-                                    wire:model="rentalpayments.payment_method">
+                                    wire:model.lazy="rentalpayments.payment_method">
 
                                     {{-- {{-- <option @if ($rent1->status == 'Payment Pending') selected @endif   value="Payment Pending">Payment Pending</option> --}}
                                     <option @if ($rent1->payment_method == 'Credit') selected @endif value="Credit">Credit
@@ -160,7 +162,7 @@
 
                                 @if ($rentalpayments['payment_method'] != 'Credit')
                                     <select name="" id="" class="rounded scale-90"
-                                        wire:model="rentalpayments.rental_status">
+                                        wire:model.lazy="rentalpayments.rental_status">
                                         <option @if ($rent1->rental_status == 'Pending') selected @endif value="Pending">
                                             Pending</option>
                                         <option @if ($rent1->rental_status == 'Approved') selected @endif value="Approved">
@@ -178,7 +180,13 @@
                         </div>
 
 
-                        <button class="text-white py-1 rounded bg-black">Save</button>
+                        <button class="text-white py-1 rounded bg-black" wire:loading.attr="disabled">
+                            <i class="animate-spin fa fa-spinner" aria-hidden="true" wire:loading></i>
+
+                            Save
+                        </button>
+
+
                     </div>
 
                 </form>
@@ -187,7 +195,3 @@
         </div>
     @endif
 </div>
-
-<script>
-    let table = new DataTable('#mytable');
-</script>

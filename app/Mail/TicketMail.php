@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Rent;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -9,16 +10,18 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class SampleMail extends Mailable
+class TicketMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      */
+    public $rentalbike;
     public function __construct()
     {
         //
+        $this->rentalbike = Rent::latest()->first();
     }
 
     /**
@@ -27,7 +30,7 @@ class SampleMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Sample Mail',
+            subject: 'Ticket Mail',
         );
     }
 
@@ -37,7 +40,7 @@ class SampleMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.text_email',
+            markdown: 'emails.ticketmail',
         );
     }
 

@@ -2,23 +2,27 @@
 
 namespace App\Mail;
 
+use App\Models\Rent;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use PhpParser\Node\Expr\Cast\Object_;
 
-class SampleMail extends Mailable
+class RentalStatusMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public $rent;
+    public function __construct(Rent $rent)
     {
         //
+        $this->rent = $rent;
     }
 
     /**
@@ -27,7 +31,7 @@ class SampleMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Sample Mail',
+            subject: 'Rental Status Mail',
         );
     }
 
@@ -37,7 +41,7 @@ class SampleMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.text_email',
+            markdown: 'emails.rentalstatusmail',
         );
     }
 

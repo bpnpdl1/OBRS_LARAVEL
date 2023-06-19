@@ -40,9 +40,8 @@
         .disable_dates>span {
             mix-blend-mode: darken;
         }
-
-        @livewireStyles()
     </style>
+    @livewireStyles()
 </head>
 
 <body class="font-sans antialiased">
