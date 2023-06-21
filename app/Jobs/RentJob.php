@@ -33,7 +33,7 @@ class RentJob implements ShouldQueue
     {
         //
 
-        dd($this->rent);
+
         Mail::to($this->rent->user->email)->send(new TicketMail($this->rent->id));
     }
 }

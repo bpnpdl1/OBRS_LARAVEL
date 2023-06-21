@@ -98,7 +98,7 @@ class BikeDetails extends Component
         Bike::find($this->bike->id)->update($bike);
         $msg = 'Bike Added on rent Successfully. Please come with rental ticket to take bike on rent';
 
-        dispatch(new RentJob($rent->id));
+
         return redirect(route('renter.rent.details'))->with('success', $msg);
     }
 

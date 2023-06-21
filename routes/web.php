@@ -165,11 +165,6 @@ Route::post('/khaltirent', function (Request $request) {
     } else {
         return response()->json(['error' => 1, 'message' => 'Payment Failed']);
     }
-
-
-
-
-
     // Rent::create($rentbike);
     // $bike['status'] = "On Rent";
     // Bike::find($this->bike->id)->update($bike);

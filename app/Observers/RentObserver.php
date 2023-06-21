@@ -17,6 +17,8 @@ class RentObserver
     {
         //
 
+
+        dispatch(new RentJob($rent->id));
     }
 
     /**

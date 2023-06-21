@@ -1,5 +1,5 @@
 <div>
-    <p>Dear {{ auth()->user()->name }},</p>
+    <p>Dear {{ $rentalbike->user->name }},</p>
 
     <p>Your Rental Ticket Information is in below</p>
 

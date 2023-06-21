@@ -137,11 +137,8 @@ class RentsController extends Controller
         $bike['status'] = "On Rent";
         Bike::find($request->bike)->update($bike);
 
-        $rent = Rent::create($data);
+        Rent::create($data);
 
-
-
-        dispatch(new RentJob($rent->id));
         return redirect(route('rents.index'))->with('success', 'Bike Added on rent Successfully');
     }
 
