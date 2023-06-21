@@ -36,7 +36,7 @@ Route::get('/', function () {
 
     $brands = Brand::all();
     return view('home', compact('brands'));
-})->name('home');
+})->middleware('verified')->name('home');
 
 Route::get('/showmail', function () {
 
@@ -104,25 +104,75 @@ Route::post('/bikedetails', [RenterController::class, 'bikedetails'])->name('ren
 Route::get('/rentdetails', [RenterController::class, 'rentdetails'])->name('renter.rent.details');
 Route::post('/khaltirent', function (Request $request) {
 
+
+
+
     $rentbike = [
-        "rent_from_date" => $request->from_date,
-        "rent_to_date" => $request->to_date,
+        "rent_from_date" => session()->get('from_date'),
+        "rent_to_date" => session()->get('to_date'),
         "rental_status" => "Pending",
         "payment_method" => "Online",
-        'total_rental_price' => $this->total_rental_price,
-        "bike_id" => $request->bike->id,
+        'total_rental_price' => $request['data']['amount'],
         "user_id" => auth()->user()->id
     ];
 
 
 
 
-    Rent::create($rentbike);
-    $bike['status'] = "On Rent";
-    Bike::find($this->bike->id)->update($bike);
 
 
-    return response()->json($request->toArray());
+
+    $args = http_build_query(array(
+        'token' => $request['data']['token'],
+        'amount'  => $request['data']['amount']
+    ));
+
+    $url = "https://khalti.com/api/v2/payment/verify/";
+
+    # Make the call using API.
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $args);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+    $headers = ['Authorization: Key test_secret_key_cd6a0ffde92e4966b416e168e73929d2'];
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+    // Response
+    $response = curl_exec($ch);
+    $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+
+
+
+
+
+    if ($status_code == 200) {
+
+        $bike_id = Bike::where('number_plate', '=', $request['data']['product_identity'])->first();
+
+        $rentbike['bike_id'] = $bike_id->id;
+
+        Rent::create($rentbike);
+
+        session()->flash('success', 'Rent Request is Succesfully Send and Online payment Successful');
+        return response()->json(['success' => 1, 'redirectto' => route('renter.rent.details')]);
+    } else {
+        return response()->json(['error' => 1, 'message' => 'Payment Failed']);
+    }
+
+
+
+
+
+    // Rent::create($rentbike);
+    // $bike['status'] = "On Rent";
+    // Bike::find($this->bike->id)->update($bike);
+
+
+    // return response()->json($request->toArray());
 })->name('khaltirent');
 
 
