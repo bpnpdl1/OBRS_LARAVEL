@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Jobs\RentJob;
 use App\Mail\TicketMail;
 use App\Models\Bike;
 use App\Models\Rent;
@@ -91,12 +92,13 @@ class BikeDetails extends Component
 
 
 
-        Rent::create($rentbike);
+        $rent = Rent::create($rentbike);
+
         $bike['status'] = "On Rent";
         Bike::find($this->bike->id)->update($bike);
-
-
         $msg = 'Bike Added on rent Successfully. Please come with rental ticket to take bike on rent';
+
+        dispatch(new RentJob($rent->id));
         return redirect(route('renter.rent.details'))->with('success', $msg);
     }
 

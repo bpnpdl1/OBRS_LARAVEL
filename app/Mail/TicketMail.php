@@ -18,10 +18,10 @@ class TicketMail extends Mailable
      * Create a new message instance.
      */
     public $rentalbike;
-    public function __construct()
+    public function __construct($id)
     {
         //
-        $this->rentalbike = Rent::latest()->first();
+        $this->rentalbike = Rent::find($id);
     }
 
     /**

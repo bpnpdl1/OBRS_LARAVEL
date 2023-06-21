@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Jobs\RentJob;
 use App\Mail\RentalStatusMail;
 use App\Mail\TicketMail;
 use App\Models\Rent;
@@ -16,9 +17,6 @@ class RentObserver
     {
         //
 
-        $renter = Rent::latest()->first();
-
-        Mail::to($renter->user->email)->send(new TicketMail());
     }
 
     /**

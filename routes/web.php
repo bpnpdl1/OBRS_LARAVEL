@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\VariantsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Renter\RenterController;
+use App\Jobs\SendEmailJob;
 use Illuminate\Http\Request;
 use App\Mail\ObrsMail;
 use App\Models\Brand;
@@ -40,8 +41,10 @@ Route::get('/', function () {
 
 Route::get('/showmail', function () {
 
+    // Mail::to('bipo_bca2076@lict.edu.np')->send(new ObrsMail());
+    dispatch(new SendEmailJob());
 
-    return view('emails.rentalstatusmail');
+    return view('emails.obrsmail');
 });
 
 

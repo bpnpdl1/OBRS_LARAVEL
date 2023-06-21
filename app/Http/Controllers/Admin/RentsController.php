@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\RentJob;
 use App\Models\Bike;
 use App\Models\Brand;
 use App\Models\Rent;
@@ -136,7 +137,11 @@ class RentsController extends Controller
         $bike['status'] = "On Rent";
         Bike::find($request->bike)->update($bike);
 
-        Rent::create($data);
+        $rent = Rent::create($data);
+
+
+
+        dispatch(new RentJob($rent->id));
         return redirect(route('rents.index'))->with('success', 'Bike Added on rent Successfully');
     }
 

@@ -1,14 +1,17 @@
-<x-mail::message>
-    # Introduction
+<!DOCTYPE html>
+<html lang="en">
 
-    The body of your message.
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
 
-    <x-rent-ticket />
+<body>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis delectus nobis doloribus consectetur nulla
+    suscipit unde qui eveniet, enim reiciendis amet sit, inventore illum nihil tempora eius quis ut ipsum saepe deleniti
+    accusantium! Id.
+</body>
 
-    <x-mail::button :url="''">
-        Button Text
-    </x-mail::button>
-
-    Thanks,<br>
-    {{ config('app.name') }}
-</x-mail::message>
+</html>
