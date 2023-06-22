@@ -237,22 +237,6 @@
     </div>
 
     <script>
-        var paybutton = document.querySelector('.ui.button.primary');
-
-        if (paybutton) {
-            paybutton.onclick = function() {
-                let loader = document.getElementById('loader');
-
-                loader.innerHTML =
-                    '<div class="h-screen w-screen fixed backdrop-blur-md flex justify-center items-center">' +
-                    '<div class="bg-white flex flex-col items-center justify-center p-20 rounded shadow-xl">' +
-                    '<i class="fas fa-spinner text-5xl opacity-80 animate-spin"></i><br>' +
-                    '<p>Please wait while</p>' +
-                    '</div>' +
-                    '</div>';
-            };
-        }
-
         var config = {
             // replace the publicKey with yours
             "publicKey": "test_public_key_018852f60fab4f69a4c7e0ee6351c724",
@@ -286,15 +270,6 @@
 
                             window.location.href = response.redirectto;
 
-
-
-
-
-
-
-
-
-
                         },
                         error: function(xhr, status, error) {
                             // Handle the error
@@ -307,6 +282,7 @@
                 },
                 onClose() {
                     console.log('widget is closing');
+
                 }
             }
         };
