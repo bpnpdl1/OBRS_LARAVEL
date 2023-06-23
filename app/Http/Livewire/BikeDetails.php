@@ -15,7 +15,7 @@ class BikeDetails extends Component
 {
 
     public $bike, $rentcounts, $checkout = "hide", $recommendedbikes, $from_date, $to_date, $rentaldays, $total_rental_price, $toogledialog = "hide";
-    public $dateerror, $image_url, $billbookdisplay = 'hidden';
+    public $dateerror, $image_url, $billbookdisplay = 'hidden', $min_from_date;
 
 
     public function mount()
@@ -23,6 +23,8 @@ class BikeDetails extends Component
 
         $bike = Bike::find($this->bike['id']);
         $this->image_url = "storage/bike_images/" . $bike['billbook'];
+
+
 
         $this->from_date = Carbon::parse(session()->get('from_date'));
         $this->to_date = Carbon::parse(session()->get('to_date'));

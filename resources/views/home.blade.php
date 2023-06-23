@@ -22,6 +22,12 @@
 
 
                 </div>
+
+                @php
+                    if ($loop->iteration == 4) {
+                        break;
+                    }
+                @endphp
             @endforeach
 
         </div>
@@ -33,13 +39,7 @@
             <p class="text-2xl font-semibold text-center">Best Renting Bikes</p>
             <small class=" text-center">Hire Bike on rent</small>
         </div>
-        <div class="flex flex-row justify-around px-4 pb-6 ">
 
-
-            @foreach ($brands->toArray() as $brand)
-                <x-bike-card />
-            @endforeach
-
-        </div>
+        <x-bike-card />
     </div>
 @endsection

@@ -72,7 +72,7 @@
                         <td class="w-24">{{ $rent->rent_to_date }}</td>
                         <td class="w-24">
 
-                            {{ $rent->created_at->format('Y-m-d') }}
+                            {{ $rent->created_at->diffForHumans() }}
                         </td>
                         <td>{{ $rent->total_rental_price / $rent->bike->variant->variant_rental_price }}</td>
                         <td>{{ $rent->bike->variant->variant_rental_price }}</td>

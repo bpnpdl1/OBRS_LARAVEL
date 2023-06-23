@@ -3,8 +3,10 @@
 namespace App\View\Components;
 
 use App\Models\Bike;
+use App\Models\Rent;
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\Component;
 
 class BikeCard extends Component
@@ -12,11 +14,24 @@ class BikeCard extends Component
     /**
      * Create a new component instance.
      */
-    public $bike;
+    public $bikes, $trending_bikes;
     public function __construct()
     {
+
         //
-        $this->bike = Bike::find(1);
+        // dd(date('Y-m'));
+        $this->trending_bikes = Rent::select('bike_id', DB::raw('COUNT(bike_id) AS bike_count'))
+            ->where(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'), '=', date('Y-m'))
+            ->groupBy('bike_id')
+            ->orderBy('bike_count', 'DESC')
+            ->pluck('bike_id');
+
+        // dd($this->trending_bikes->toArray());
+
+        $this->bikes = Bike::when($this->trending_bikes, function ($query) {
+            $query->whereIn('id', $this->trending_bikes);
+        })
+            ->where('status', '=', 'Available')->get();
     }
 
     /**

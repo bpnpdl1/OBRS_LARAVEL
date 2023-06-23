@@ -31,10 +31,13 @@
 </nav>
 
 
+
+
 <script>
+    let contact = document.querySelector('#contact');
     window.addEventListener('scroll', function() {
         let navbar = document.getElementsByTagName('nav')[0];
-        let contact = document.querySelector('#contact');
+
 
         console.log(window.scrollY);
 
@@ -53,8 +56,11 @@
             contact.classList.remove('hidden')
 
         }
-
-
-
     });
+
+    let currentUrl = window.location.href;
+
+    if (currentUrl != "{{ route('home') }}") {
+        contact.classList.add('hidden');
+    }
 </script>
