@@ -10,12 +10,13 @@ class Bike extends Model
     use HasFactory;
     protected $guarded;
 
-    public function variant(){
+    public function variant()
+    {
         return $this->belongsTo(Variant::class);
     }
 
-    public function rents(){
+    public function rents()
+    {
         return $this->belongsToMany(Rent::class);
     }
-
 }

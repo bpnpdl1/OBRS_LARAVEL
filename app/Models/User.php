@@ -36,6 +36,12 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array<string, string>
      */
+
+
+    public function rent()
+    {
+        return $this->belongsTo(Rent::class);
+    }
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];

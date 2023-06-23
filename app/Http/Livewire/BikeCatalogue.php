@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Bike;
 use App\Models\Brand;
+use App\Models\User;
 use App\Models\Variant;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;

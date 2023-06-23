@@ -13,13 +13,13 @@ class Rent extends Model
 
 
 
-    public function bike(){
-        return $this->belongsTo(Bike::class);
+    public function bike()
+    {
+        return $this->hasOne(Bike::class);
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
-
-   
 }

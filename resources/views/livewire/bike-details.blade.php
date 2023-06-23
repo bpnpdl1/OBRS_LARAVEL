@@ -28,13 +28,13 @@
                                 <p>From date</p>
                                 <input type="date" min="{{ date('Y-m-d') }}" name="" id=""
                                     class="w-[100%] bg-slate-200 rounded" wire:model="from_date"
-                                    value="{{ $from_date }}" readonly>
+                                    @if (session()->get('from_date')) value="{{ $from_date }}" readonly @endif>
                             </div>
                             <div>
                                 <p>To date</p>
                                 <input type="date" name="" id=""
                                     class="w-[100%] bg-slate-200 rounded" wire:model="to_date"
-                                    value="{{ $to_date }}" readonly>
+                                    @if (session()->get('to_date')) value="{{ $to_date }}" readonly @endif>
                             </div>
                         </div>
                         @if ($dateerror)
@@ -148,6 +148,11 @@
                                         </form>
                                     </div>
                                 </div>
+                                @php
+                                    if ($loop->iteration == 3) {
+                                        break;
+                                    }
+                                @endphp
 
                             @empty
 
