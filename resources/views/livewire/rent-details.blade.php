@@ -60,7 +60,7 @@
                     <th class="p-3 font-semibold border-separate ">Total Rental Price</th>
                     <th class="p-3 font-semibold border-separate ">Payment Method</th>
                     <th class="p-3 font-semibold border-separate ">Rent Status</th>
-                    <th class="p-3 font-semibold border-separate ">Download ticket</th>
+                    <th class="p-3 font-semibold border-separate ">View ticket</th>
                 </tr>
             </thead>
             <tbody class="bg-gray-100">
@@ -115,10 +115,6 @@
                         aria-hidden="true"></i></button>
                 <h2 class="font-medium text-xl">View Rental Ticket</h2>
                 <hr class="bg-black h-0.5">
-                <div class="flex justify-end">
-                    <button class="bg-slate-600 py-1 px-3 text-sm m-2 text-white rounded " wire:click="exportpdf">Export
-                        as PDF</button>
-                </div>
                 <div class="text-sm text-center">
                     <p>{{ $companyname }}</p>
                     <p>{{ $companyphonenumber }}</p>

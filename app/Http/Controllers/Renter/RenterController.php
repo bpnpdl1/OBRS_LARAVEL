@@ -40,20 +40,24 @@ class RenterController extends Controller
         $rents = Rent::where('bike_id', '=', $request->bike_id);
         $rentcounts = $rents->count();
         $bike = Bike::find($request->bike_id);
-        $recommendedbikes = Bike::where('id', '!=', $request->bike_id)->where('variant_id', '=', $bike->variant->id)->get();
+        $recommendedbikes = Bike::where('id', '!=', $request->bike_id)->where('status', '=', 'Available')->where('variant_id', '=', $bike->variant->id)->get();
 
         // dd(User::find(auth()->user()->id)->rent()->toArray());
+
+
         $rented_user = Rent::select('rents.*', 'bikes.*', 'users.*')
             ->join('users', 'users.id', '=', 'rents.user_id')
             ->join('bikes', 'bikes.id', '=', 'rents.bike_id')
             ->where('user_id', auth()->user()->id)
             ->where('status', 'On Rent')
             ->whereIn('rental_status', ['Pending', 'Approved', 'Marked_as_return']);
+        // dd($rented_user->pluck('status'))
 
-        dd($rented_user);
-        if ($rented_user) {
-            session()->flash('success', 'Already Rented a Bike');
-            redirect()->back();
+
+        if ($rented_user->get()->toArray()) {
+
+            // session()->flash('success', 'Already Rented a Bike');
+            redirect()->back()->with('success', 'Already Rented a Bike');
         } else {
             # code...
             return view('frontend.bikedetails', compact('bike', 'rentcounts', 'recommendedbikes'));
@@ -63,6 +67,7 @@ class RenterController extends Controller
 
     public function rentdetails()
     {
+
 
 
         return view('frontend.rentdetails');

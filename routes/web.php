@@ -39,19 +39,10 @@ Route::get('/', function () {
     return view('home', compact('brands'));
 })->name('home');
 
-Route::get('/showmail', function () {
 
-    // Mail::to('bipo_bca2076@lict.edu.np')->send(new ObrsMail());
-    dispatch(new SendEmailJob());
-
-    return view('emails.obrsmail');
-});
 
 
 Route::get('/noaccess', function () {
-
-
-
 
     return view('noaccess.noaccess');
 })->name('no-access');
