@@ -1,7 +1,7 @@
   <div class="flex flex-row justify-around px-4 pb-6 ">
 
 
-      @foreach ($bikes as $bike)
+      @forelse ($bikes as $bike)
           <div
               class="max-w-[20rem] mx-auto bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl hover:scale-110  ">
 
@@ -40,6 +40,13 @@
                   break;
               }
           @endphp
-      @endforeach
+      @empty
+
+          <div class="max-w-[20rem] mx-auto bg-white rounded-lg overflow-hidden   ">
+
+              <p class="text-xl font-semibold">No bikes Available</p>
+          </div>
+      @endforelse
+
 
   </div>

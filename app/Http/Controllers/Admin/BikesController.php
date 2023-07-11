@@ -42,7 +42,7 @@ class BikesController extends Controller
     {
         //
         $request->validate([
-            'number_plate' => 'required',
+            'number_plate' => 'required|unique:bikes,number_plate',
             'cc' => 'required',
             'status' => 'required',
             'variant' => 'required',
@@ -93,7 +93,7 @@ class BikesController extends Controller
     {
         //
         $request->validate([
-            'number_plate' => 'required',
+            'number_plate' => 'required|unique:bikes,number_plate,' . $id . ',id',
             'cc' => 'required',
             'status' => 'required',
             'variant' => 'required',

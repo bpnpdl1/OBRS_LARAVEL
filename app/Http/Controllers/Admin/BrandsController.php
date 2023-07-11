@@ -37,7 +37,7 @@ class BrandsController extends Controller
         //
         $request->validate([
             'brand_logo' => 'required|image|max:512',
-            'brand_name' => 'required|min:5'
+            'brand_name' => 'required|min:5|unique:brands,brand_name'
 
         ]);
 
@@ -50,9 +50,9 @@ class BrandsController extends Controller
         Brand::create($data);
         $brands = Brand::all();
         $brands = $brands->toArray();
-        $success="Successfully Created New Brand";
+        $success = "Successfully Created New Brand";
         // return view('admin.brands.index')->with(compact('brands','success'));
-        return redirect(route('brands.index'))->with('success',$success);
+        return redirect(route('brands.index'))->with('success', $success);
     }
 
     /**
@@ -80,11 +80,12 @@ class BrandsController extends Controller
     public function update(string $id, Request $request)
     {
         //
-        
-        $request->validate([
-            'brand_name'=>'required',
-            'brand_logo' => 'sometimes|max:512|image'
 
+
+
+        $request->validate([
+            'brand_name' => 'required|unique:brands,brand_name,' . $id . ',id',
+            'brand_logo' => 'sometimes|max:512|image'
         ]);
         $data = [
             'brand_name' => $request->brand_name
@@ -93,11 +94,10 @@ class BrandsController extends Controller
 
 
         if (!is_null($request->file('brand_logo'))) {
-            $brand=Brand::find($id);
-            Storage::disk('public')->delete($brand['brand_logo']);  
+            $brand = Brand::find($id);
+            Storage::disk('public')->delete($brand['brand_logo']);
             $path = Storage::disk('public')->put('logo', $request->file('brand_logo'));
-            Brand::find($id)->update(['brand_logo'=>$path]);
-
+            Brand::find($id)->update(['brand_logo' => $path]);
         }
 
 
@@ -110,10 +110,10 @@ class BrandsController extends Controller
     public function destroy(Request $brand)
     {
         //
-       $brand= Brand::find($brand->brand_id);
-      Storage::disk('public')->delete($brand['brand_logo']);  
-       $brand->delete();
+        $brand = Brand::find($brand->brand_id);
+        Storage::disk('public')->delete($brand['brand_logo']);
+        $brand->delete();
 
-        return redirect(route('brands.index'))->with('success','Brand Deleted Successfully');
+        return redirect(route('brands.index'))->with('success', 'Brand Deleted Successfully');
     }
 }

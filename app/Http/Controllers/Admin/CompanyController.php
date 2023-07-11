@@ -30,12 +30,12 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         //
-       $company=$request->toArray();
-       $company['user_id']=auth()->user()->id;
+        $company = $request->toArray();
+        $company['user_id'] = auth()->user()->id;
 
-       
-       
-       return view('Admin.Bikes.index');
+
+
+        return view('Admin.Bikes.index');
     }
 
     /**

@@ -124,7 +124,7 @@
             <div class="bg-white rounded shadow-md shadow-slate-700 p-4 relative {{ $display }}">
                 <button wire:click="tooglerentdialog(2)"> <i
                         class="fa fa-times hover:bg-black hover:text-white p-1 rounded-full absolute top-2 right-2"
-                        aria-hidden="true">cancel</i>
+                        aria-hidden="true"></i>
                 </button>
 
                 <h2 class="text-xl font-semibold mt-4 p-3 rounded-sm">Rental Transaction Information</h2>

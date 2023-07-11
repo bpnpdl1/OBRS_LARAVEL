@@ -17,8 +17,8 @@ class VariantsController extends Controller
     {
         //
         $variants = Variant::all();
-        
-        
+
+
 
         return view('admin.variants.index')->with(compact('variants'));
     }
@@ -41,9 +41,12 @@ class VariantsController extends Controller
         //
 
         $request->validate([
-            'variant_name' => 'required'
+            'variant_name' => 'required|unique:variants,variant_name',
+            'variant_rental_price' => 'required|numeric|min:100',
+            'variant_image' => 'required|image|mimes:png,jpg|max:512'
+
         ]);
-       
+
         $path = Storage::disk('public')->put('variant_images', $request->file('variant_image'));
         $path = str_replace('variant_images/', "", $path);
 
@@ -90,30 +93,36 @@ class VariantsController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $request->validate([
+            'variant_name' => 'required|unique:variants,variant_name,' . $id . 'id',
+            'variant_rental_price' => 'required|numeric|min:100',
+            'variant_image' => 'nullable|image|mimes:png,jpg|max:512'
 
-        $data=[
-            'variant_name'=>$request['variant_name'],
-            'variant_rental_price'=>$request['variant_rental_price'],
-            'brand_id'=>$request['brand']
+        ]);
+
+        $data = [
+            'variant_name' => $request['variant_name'],
+            'variant_rental_price' => $request['variant_rental_price'],
+            'brand_id' => $request['brand']
 
         ];
 
-    
-      
+
+
         Variant::find($id)->update($data);
 
         $variant = Variant::find($id);
 
         if (!is_null($request->file('variant_image')) && !is_null($variant['variant_image'])) {
 
-            Storage::disk('public')->delete('variant_images/'.$variant['variant_image']);
+            Storage::disk('public')->delete('variant_images/' . $variant['variant_image']);
 
             $path = Storage::disk('public')->put('variant_images', $request->file('variant_image'));
             $path = str_replace('variant_images/', '', $path);
             Variant::find($id)->update(['variant_image' => $path]);
         }
 
-     
+
 
 
         $success = "Updated Variant successfully";

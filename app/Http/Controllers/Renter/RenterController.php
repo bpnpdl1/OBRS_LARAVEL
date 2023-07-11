@@ -50,14 +50,24 @@ class RenterController extends Controller
             ->join('bikes', 'bikes.id', '=', 'rents.bike_id')
             ->where('user_id', auth()->user()->id)
             ->where('status', 'On Rent')
-            ->whereIn('rental_status', ['Pending', 'Approved', 'Marked_as_return']);
+            ->whereIn('rental_status', ['Pending', 'Approved']);
         // dd($rented_user->pluck('status'))
 
 
         if ($rented_user->get()->toArray()) {
 
-            // session()->flash('success', 'Already Rented a Bike');
-            redirect()->back()->with('success', 'Already Rented a Bike');
+
+
+            session()->flash('error', 'Already Rented a Bike');
+            $brands = Brand::all();
+
+
+            $ccs = Bike::groupBy('cc')->pluck('cc');
+
+
+
+            $prices = Variant::groupBy('variant_rental_price')->pluck('variant_rental_price');
+            return view('frontend.bikes', compact('brands', 'prices', 'ccs', 'rented_user'));
         } else {
             # code...
             return view('frontend.bikedetails', compact('bike', 'rentcounts', 'recommendedbikes'));
