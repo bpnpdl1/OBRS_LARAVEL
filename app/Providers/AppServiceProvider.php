@@ -5,8 +5,6 @@ namespace App\Providers;
 use App\Models\Company;
 use Illuminate\Support\ServiceProvider;
 
-use function PHPUnit\Framework\isNull;
-
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -23,8 +21,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
-        $company = Company::first();
-
+        // $company = Company::first();
+        view()->share('companyname', 'Bike Rental');
+        view()->share('companyaddress', 'Pokhara');
+        view()->share('companyphonenumber', '9840839292');
 
         if (isset($company)) {
             view()->share('companyname', $company['name']);
@@ -32,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
             view()->share('companyphonenumber', $company['phonenumber']);
         } else {
             view()->share('companyname', 'Bike Rental');
+            view()->share('companyaddress', 'Pokhara');
+            view()->share('companyphonenumber', '9840839292');
         }
     }
 }
