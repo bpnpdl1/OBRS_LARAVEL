@@ -26,14 +26,14 @@ class AppServiceProvider extends ServiceProvider
         view()->share('companyaddress', 'Pokhara');
         view()->share('companyphonenumber', '9840839292');
 
-        if (isset($company)) {
-            view()->share('companyname', $company['name']);
-            view()->share('companyaddress', $company['address']);
-            view()->share('companyphonenumber', $company['phonenumber']);
-        } else {
-            view()->share('companyname', 'Bike Rental');
-            view()->share('companyaddress', 'Pokhara');
-            view()->share('companyphonenumber', '9840839292');
-        }
+        // if (isset($company)) {
+        //     view()->share('companyname', $company['name']);
+        //     view()->share('companyaddress', $company['address']);
+        //     view()->share('companyphonenumber', $company['phonenumber']);
+        // } else {
+        //     view()->share('companyname', 'Bike Rental');
+        //     view()->share('companyaddress', 'Pokhara');
+        //     view()->share('companyphonenumber', '9840839292');
+        // }
     }
 }

@@ -25,6 +25,7 @@
 </head>
 
 <body class="font-sans antialiased bg-slate-100">
+
     @include('layouts.navigation')
 
     @include('layouts.successmsg')
