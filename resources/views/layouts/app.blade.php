@@ -60,7 +60,6 @@
 
                 <a href="{{ route('dashboard') }}"
                     class="hover:bg-gray-400 p-2  border-b-2 border-b-gray-200">Dashboard</a>
-                <a class="hover:bg-gray-400 p-2  border-b-2 border-b-gray-200">Users</a>
                 <a href="{{ route('brands.index') }}"
                     class="hover:bg-gray-400 p-2  border-b-2 border-b-gray-200">Brands</a>
                 <a href="{{ route('variants.index') }}"

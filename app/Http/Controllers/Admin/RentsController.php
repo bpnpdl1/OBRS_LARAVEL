@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\RentJob;
 use App\Models\Bike;
 use App\Models\Brand;
 use App\Models\Rent;
 use App\Models\User;
 use App\Models\Variant;
+use App\Rules\EmailNotFound;
 use Carbon\Carbon;
-use DateTime;
 use Illuminate\Http\Request;
 
 class RentsController extends Controller
@@ -22,18 +21,13 @@ class RentsController extends Controller
     {
         //
 
-
         return view('admin.rents.index');
     }
 
-
-
-
     /*
     Disable date return
-    
-    */
 
+    */
 
     public function rented_dates($from_date, $to_date)
     {
@@ -49,18 +43,15 @@ class RentsController extends Controller
         return $rented_dates;
     }
 
-
-
     /**
      * Show the form for creating a new resource.
      */
-
     public function create()
     {
         //
 
-
         $brands = Brand::all();
+
         return view('admin.rents.create', compact('brands'));
     }
 
@@ -70,7 +61,6 @@ class RentsController extends Controller
         $data = Variant::all()->where('brand_id', '=', $request->brand_id);
         $variants = $data->toArray();
 
-
         return response()->json($variants);
     }
 
@@ -79,13 +69,8 @@ class RentsController extends Controller
         $rental_dates = Rent::all()->where('bike_id', '=', $request->bike_id);
         $rental_dates = $rental_dates->toArray();
 
-
-
-
-
         return response()->json($rental_dates);
     }
-
 
     public function getBike(Request $request)
     {
@@ -94,11 +79,7 @@ class RentsController extends Controller
         $data = Bike::join('variants', 'variants.id', '=', 'bikes.variant_id')
             ->select('bikes.*', 'variants.variant_rental_price')->where('variant_id', '=', $request->variant_id)->get();
 
-
-
-
         $bikes = $data->toArray();
-
 
         return response()->json($bikes);
     }
@@ -111,6 +92,12 @@ class RentsController extends Controller
         //total_rental_price
         //
 
+        $request->validate([
+            'email' => ['required', 'email', new EmailNotFound],
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+
         $variants = Variant::find($request->variant);
 
         $from_date = Carbon::createFromDate($request->from_date);
@@ -119,22 +106,20 @@ class RentsController extends Controller
         $rental_days = $to_date->diffInDays($from_date);
         $total_rental_price = $variants['variant_rental_price'] * $rental_days;
 
-
-
         $user = User::all()->where('email', '=', $request->email)[0];
 
         $data = [
-            "rent_from_date" => $request->from_date,
-            "rent_to_date" => $request->to_date,
-            "rental_status" => "Approved",
+            'rent_from_date' => $request->from_date,
+            'rent_to_date' => $request->to_date,
+            'rental_status' => 'Approved',
             'total_rental_price' => $total_rental_price,
             'rental_number' => uniqid(),
-            'payment_method' => "Cash on Hand",
-            "bike_id" => $request->bike,
-            "user_id" => $user->id
+            'payment_method' => 'Cash on Hand',
+            'bike_id' => $request->bike,
+            'user_id' => $user->id,
         ];
 
-        $bike['status'] = "On Rent";
+        $bike['status'] = 'On Rent';
         Bike::find($request->bike)->update($bike);
 
         Rent::create($data);

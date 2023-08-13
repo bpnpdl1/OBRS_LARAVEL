@@ -99,14 +99,30 @@
                             <hr class="h-1">
 
                             <div class="h-[400px] overflow-y-auto min-w-[600px]">
-                                <img src="{{ asset($image_url) }}" alt="image" class="w-full object-cover">
+                                <img src="{{ asset($image_url) }}" alt="image" class="w-full object-contain">
                             </div>
                         </div>
                     </div>
                 </div>
 
-
-
+                @if ($rentdialog == 'show')
+                    <div class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                        <div class="bg-white p-5 rounded-lg shadow-lg">
+                            <div class="flex items-center justify-center mb-3">
+                                <svg class="animate-spin h-6 w-6 text-blue-500 mr-2" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10"
+                                        stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor"
+                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.843 3.029 7.971l2.03-2.03zM12 20a8 8 0 100-16 8 8 0 000 16z">
+                                    </path>
+                                </svg>
+                                <span class="text-blue-500 font-semibold">Please wait...</span>
+                            </div>
+                            <p class="text-gray-600">Rental Process is Proccessing.....</p>
+                        </div>
+                    </div>
+                @endif
 
 
 
@@ -120,7 +136,7 @@
                                 <div class="flex flex-row gap-3 border-2 w-60 rounded">
                                     <div>
                                         <img src="{{ asset('storage/variant_images/' . $rbike->variant->variant_image) }}"
-                                            alt="image" class="w-[100px] h-[180px] object-cover">
+                                            alt="image" class="w-[100px] h-[180px] object-contain">
 
                                     </div>
                                     <div>

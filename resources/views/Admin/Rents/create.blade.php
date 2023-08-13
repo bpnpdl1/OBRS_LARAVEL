@@ -42,7 +42,15 @@
     <div>
 
         <p class="font-bold text-xl">Rent New Bike</p>
-
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <form action="{{ route('rents.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="flex flex-col gap-4 p-3 shadow-lg rounded-lg border border-b-2 border-gray-600">
@@ -124,7 +132,7 @@
                     <input type="text" name="email" id="email"
                         class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                         value="{{ old('email') }}">
-
+                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
 
 

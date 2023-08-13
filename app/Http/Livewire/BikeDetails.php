@@ -2,29 +2,46 @@
 
 namespace App\Http\Livewire;
 
-use App\Jobs\RentJob;
-use App\Mail\TicketMail;
 use App\Models\Bike;
 use App\Models\Rent;
-use App\View\Components\RentTicket;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class BikeDetails extends Component
 {
+    public $bike;
 
-    public $bike, $rentcounts, $checkout = "hide", $recommendedbikes, $from_date, $to_date, $rentaldays, $total_rental_price, $toogledialog = "hide";
-    public $dateerror, $image_url, $billbookdisplay = 'hidden', $min_from_date;
+    public $rentcounts;
 
+    public $checkout = 'hide';
+
+    public $recommendedbikes;
+
+    public $from_date;
+
+    public $to_date;
+
+    public $rentaldays;
+
+    public $total_rental_price;
+
+    public $toogledialog = 'hide';
+
+    public $dateerror;
+
+    public $image_url;
+
+    public $billbookdisplay = 'hidden';
+
+    public $min_from_date;
+
+    public $rentdialog = 'hide';
 
     public function mount()
     {
 
         $bike = Bike::find($this->bike['id']);
-        $this->image_url = "storage/bike_images/" . $bike['billbook'];
-
-
+        $this->image_url = 'storage/bike_images/'.$bike['billbook'];
 
         $this->from_date = Carbon::parse(session()->get('from_date'));
         $this->to_date = Carbon::parse(session()->get('to_date'));
@@ -36,16 +53,15 @@ class BikeDetails extends Component
         $this->from_date = $this->from_date->format('Y-m-d');
         $this->to_date = $this->to_date->format('Y-m-d');
 
-
         $this->total_rental_price = $rentaldays * $this->bike->variant->variant_rental_price;
     }
 
     public function billbookdialog()
     {
-        if ($this->billbookdisplay == "fixed") {
-            $this->billbookdisplay = "hidden";
-        } elseif ($this->billbookdisplay == "hidden") {
-            $this->billbookdisplay = "fixed";
+        if ($this->billbookdisplay == 'fixed') {
+            $this->billbookdisplay = 'hidden';
+        } elseif ($this->billbookdisplay == 'hidden') {
+            $this->billbookdisplay = 'fixed';
         }
     }
 
@@ -53,10 +69,6 @@ class BikeDetails extends Component
     {
         $this->calculaterentaldays();
     }
-
-
-
-
 
     public function calculaterentaldays()
     {
@@ -67,44 +79,35 @@ class BikeDetails extends Component
 
         $this->rentaldays = $rentaldays;
 
-
         $this->total_rental_price = $rentaldays * $this->bike->variant->variant_rental_price;
     }
 
-
-
-
     public function checkout()
     {
-        $this->checkout = "show";
+        $this->checkout = 'show';
     }
 
     public function rentbike()
     {
+
         $rentbike = [
-            "rent_from_date" => $this->from_date,
-            "rent_to_date" => $this->to_date,
-            "rental_status" => "Pending",
-            "payment_method" => "Credit",
+            'rent_from_date' => $this->from_date,
+            'rent_to_date' => $this->to_date,
+            'rental_status' => 'Pending',
+            'payment_method' => 'Credit',
             'total_rental_price' => $this->total_rental_price,
-            "bike_id" => $this->bike->id,
-            "user_id" => auth()->user()->id
+            'bike_id' => $this->bike->id,
+            'user_id' => auth()->user()->id,
         ];
-
-
-
 
         $rent = Rent::create($rentbike);
 
-        $bike['status'] = "On Rent";
+        $bike['status'] = 'On Rent';
         Bike::find($this->bike->id)->update($bike);
         $msg = 'Bike Added on rent Successfully. Please come with rental ticket to take bike on rent';
 
-
         return redirect(route('renter.rent.details'))->with('success', $msg);
     }
-
-
 
     public function render()
     {
@@ -114,20 +117,20 @@ class BikeDetails extends Component
     public function toogle()
     {
 
-        if ($this->from_date == "" || $this->to_date == "") {
-            $this->dateerror = "Please select the rental dates";
+        if ($this->from_date == '' || $this->to_date == '') {
+            $this->dateerror = 'Please select the rental dates';
         } elseif ($this->from_date >= $this->to_date) {
-            $this->dateerror = "From date must be smaller than to date";
+            $this->dateerror = 'From date must be smaller than to date';
         } else {
-            $this->dateerror = "";
+            $this->dateerror = '';
         }
 
-        if ($this->dateerror != "") {
+        if ($this->dateerror != '') {
         } else {
-            if ($this->toogledialog == "show") {
-                $this->toogledialog = "hide";
+            if ($this->toogledialog == 'show') {
+                $this->toogledialog = 'hide';
             } else {
-                $this->toogledialog = "show";
+                $this->toogledialog = 'show';
             }
         }
     }

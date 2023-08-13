@@ -16,7 +16,7 @@
                 <div
                     class=" flex-row w-1/5 justify-around  mx-auto bg-white rounded-lg overflow-hidden shadow-lg border-2 border-gray-300">
                     <img src="{{ asset('storage/' . $brand['brand_logo']) }}" alt="{{ $brand['brand_name'] }}"
-                        class="object-cover max-w-full h-full mx-auto mt-0 py-4">
+                        class="object-contain max-w-full h-full mx-auto mt-0 py-4">
                     <hr class="h-0.5 bg-black">
                     <h2 class="text-2xl text-center my-2  font-semibold text-gray-800">{{ $brand['brand_name'] }}</h2>
 

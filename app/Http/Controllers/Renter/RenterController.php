@@ -9,8 +9,6 @@ use App\Models\Rent;
 use App\Models\User;
 use App\Models\Variant;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Session;
 
 class RenterController extends Controller
 {
@@ -22,28 +20,25 @@ class RenterController extends Controller
         //
         $brands = Brand::all();
 
-
         $ccs = Bike::groupBy('cc')->pluck('cc');
 
-
         $prices = Variant::groupBy('variant_rental_price')->pluck('variant_rental_price');
+
         return view('frontend.bikes', compact('brands', 'prices', 'ccs'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-
     public function bikedetails(Request $request)
     {
         //
         $rents = Rent::where('bike_id', '=', $request->bike_id);
         $rentcounts = $rents->count();
         $bike = Bike::find($request->bike_id);
-        $recommendedbikes = Bike::where('id', '!=', $request->bike_id)->where('status', '=', 'Available')->where('variant_id', '=', $bike->variant->id)->get();
+        $recommendedbikes = Bike::where('id', '!=', $request->bike_id)->where('status', '=', 'Available')->orWhere('variant_id', '=', $bike->variant->id)->orWhere('cc', $bike->cc)->get();
 
         // dd(User::find(auth()->user()->id)->rent()->toArray());
-
 
         $rented_user = Rent::select('rents.*', 'bikes.*', 'users.*')
             ->join('users', 'users.id', '=', 'rents.user_id')
@@ -53,35 +48,28 @@ class RenterController extends Controller
             ->whereIn('rental_status', ['Pending', 'Approved']);
         // dd($rented_user->pluck('status'))
 
-
         if ($rented_user->get()->toArray()) {
-
-
 
             session()->flash('error', 'Already Rented a Bike');
             $brands = Brand::all();
 
-
             $ccs = Bike::groupBy('cc')->pluck('cc');
 
-
-
             $prices = Variant::groupBy('variant_rental_price')->pluck('variant_rental_price');
+
             return view('frontend.bikes', compact('brands', 'prices', 'ccs', 'rented_user'));
         } else {
-            # code...
+            // code...
             return view('frontend.bikedetails', compact('bike', 'rentcounts', 'recommendedbikes'));
         }
     }
 
-
     public function rentdetails()
     {
 
-
-
         return view('frontend.rentdetails');
     }
+
     public function create()
     {
         //

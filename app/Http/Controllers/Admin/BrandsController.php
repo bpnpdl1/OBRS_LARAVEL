@@ -17,6 +17,7 @@ class BrandsController extends Controller
         //
         $brands = Brand::all();
         $brands = $brands->toArray();
+
         return view('admin.brands.index')->with(compact('brands'));
     }
 
@@ -37,7 +38,7 @@ class BrandsController extends Controller
         //
         $request->validate([
             'brand_logo' => 'required|image|max:512',
-            'brand_name' => 'required|min:5|unique:brands,brand_name'
+            'brand_name' => 'required|min:3|unique:brands,brand_name',
 
         ]);
 
@@ -45,12 +46,12 @@ class BrandsController extends Controller
 
         $data = [
             'brand_name' => $request->brand_name,
-            'brand_logo' => $path
+            'brand_logo' => $path,
         ];
         Brand::create($data);
         $brands = Brand::all();
         $brands = $brands->toArray();
-        $success = "Successfully Created New Brand";
+        $success = 'Successfully Created New Brand';
         // return view('admin.brands.index')->with(compact('brands','success'));
         return redirect(route('brands.index'))->with('success', $success);
     }
@@ -81,25 +82,21 @@ class BrandsController extends Controller
     {
         //
 
-
-
         $request->validate([
-            'brand_name' => 'required|unique:brands,brand_name,' . $id . ',id',
-            'brand_logo' => 'sometimes|max:512|image'
+            'brand_name' => 'required|unique:brands,brand_name,'.$id.',id',
+            'brand_logo' => 'sometimes|max:512|image',
         ]);
         $data = [
-            'brand_name' => $request->brand_name
+            'brand_name' => $request->brand_name,
         ];
         Brand::find($id)->update($data);
 
-
-        if (!is_null($request->file('brand_logo'))) {
+        if (! is_null($request->file('brand_logo'))) {
             $brand = Brand::find($id);
             Storage::disk('public')->delete($brand['brand_logo']);
             $path = Storage::disk('public')->put('logo', $request->file('brand_logo'));
             Brand::find($id)->update(['brand_logo' => $path]);
         }
-
 
         return redirect(route('brands.index'));
     }

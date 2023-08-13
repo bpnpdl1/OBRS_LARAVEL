@@ -11,7 +11,7 @@
     <hr class="bg-black h-[1.05px]">
 
 
-    <div class="flex flex-row items-center px-4 ml-2">
+    <div class="flex flex-row items-start px-4 ml-2">
 
         <div class="w-72 h-full border-gray-200 shadow border-2 hover:scale-105 hover:shadow-md ">
             <h6 class="text-xl  text-center py-2 font-semibold">Filters</h6>
@@ -62,7 +62,7 @@
             @foreach ($bikes as $bike)
                 <div
                     class="max-w-[20rem] mx-auto bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl hover:scale-110  ">
-                    <img style="width: 250px; height: 200px;object-fit: cover"
+                    <img style="width: 250px; height: 200px;object-fit: contain"
                         src="{{ asset('storage/variant_images/' . $bike->variant->variant_image) }}"
                         alt="{{ asset('storage/variant_images/' . $bike->variant->variant_name) }}">
                     <div class="p-4">

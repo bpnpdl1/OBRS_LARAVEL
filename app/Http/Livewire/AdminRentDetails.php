@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Bike;
 use App\Models\Rent;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -9,23 +10,39 @@ use Livewire\WithPagination;
 class AdminRentDetails extends Component
 {
     use WithPagination;
-    public  $data = "djhfd", $paymentmethod, $entries = 10, $rentdialog = 'hide', $rent1;
+
+    public $data = 'djhfd';
+
+    public $paymentmethod;
+
+    public $entries = 10;
+
+    public $rentdialog = 'hide';
+
+    public $rent1;
+
     public $rentalpayments = ['status' => '', 'payment_method' => '', 'refund'];
-    public $refundclass = "hidden", $rentalstatus = [], $isLoading = false, $display = "block";
+
+    public $refundclass = 'hidden';
+
+    public $rentalstatus = [];
+
+    public $isLoading = false;
+
+    public $display = 'block';
+
     protected $rents;
-
-
 
     public function tooglerentdialog($id)
     {
 
-        if ($this->rentdialog == "hide") {
-            $this->rentdialog = "show";
+        if ($this->rentdialog == 'hide') {
+            $this->rentdialog = 'show';
 
             $this->rent1 = Rent::find($id);
             $this->rentalpayments = $this->rent1->toArray();
         } else {
-            $this->rentdialog = "hide";
+            $this->rentdialog = 'hide';
         }
     }
 
@@ -33,13 +50,16 @@ class AdminRentDetails extends Component
     {
         $this->isLoading = true;
 
-
-
         $data = [
             'rental_status' => $this->rentalpayments['rental_status'],
-            'payment_method' => $this->rentalpayments['payment_method']
+            'payment_method' => $this->rentalpayments['payment_method'],
         ];
 
+        if ($data['rental_status'] == 'Marked_as_return') {
+            $bike = Bike::find($this->rent1['bike_id']);
+            $bike->status = 'Available';
+            $bike->save();
+        }
 
         Rent::find($this->rentalpayments['id'])->update($data);
 
@@ -51,10 +71,9 @@ class AdminRentDetails extends Component
         return redirect(route('rents.index'));
     }
 
-
     public function showrentalrequest()
     {
-        $this->data = "clicked";
+        $this->data = 'clicked';
     }
 
     public function render()
@@ -65,7 +84,6 @@ class AdminRentDetails extends Component
             $q1->where('rental_status', '=', $this->rentalstatus);
         })->orderBy('id', 'desc')
             ->paginate($this->entries);
-
 
         return view('livewire.admin-rent-details', compact('rents'));
     }
