@@ -129,7 +129,7 @@
                 @if ($recommendedbikes)
 
                     <div class=" m-5 shadow-sm shadow-gray-800 rounded-md py-5">
-                        <h2 class="text-2xl font-semibold text-center pb-3">Recommentdation Bikes</h2>
+                        <h2 class="text-2xl font-semibold text-center pb-3">Similar Bikes</h2>
 
                         <div class="flex flex-row text-sm justify-center gap-4">
                             @forelse ($recommendedbikes as $rbike)
