@@ -24,8 +24,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @else
         {{-- Tailwind cdn --}}
-        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
     @endif
     @livewireStyles()
 </head>
