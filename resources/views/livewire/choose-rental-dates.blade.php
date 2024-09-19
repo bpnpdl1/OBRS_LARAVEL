@@ -2,38 +2,38 @@
     {{-- Success is as dangerous as failure. --}}
 
     <form wire:submit.prevent="submit" method="POST">
-
-        <div class="w-full h-[26rem] gap-10 bg-slate-500 flex justify-start items-center p-10 " id="divCover">
-            <div class="bg-slate-100 rounded-md p-5">
-                <h2 class="font-semibold text-3xl text-center">Choose a Dates</h2>
-                <div class="flex gap-3">
+        <div class="flex justify-start items-center gap-10 bg-slate-500 p-10 h-96" id="divCover">
+            <!-- Date selection form -->
+            <div class="bg-slate-100 rounded-md p-5 w-1/3">
+                <h2 class="text-3xl font-semibold text-center mb-4">Choose Dates</h2>
+                <div class="flex flex-col md:flex-row gap-3">
+                    <!-- From Date -->
                     <div>
-                        <label for="">From Date</label>
+                        <label for="from_date" class="block">From Date</label>
                         <input type="date" min="{{ $from_min_date }}" wire:model="from_date" name="from_date"
-                            max="" id="from_date"
-                            class="appearance-none leading-tight block bg-gray-100 rounded-md">
+                            class="appearance-none block w-full bg-gray-100 rounded-md p-2 leading-tight">
                     </div>
+                    <!-- To Date -->
                     <div>
-                        <label for="">To Date</label>
-                        <input type="date" min="{{ $from_date }}" name="to_date" id="from_date"
-                            wire:model="to_date" class="appearance-none leading-tight block bg-gray-100 rounded-md">
+                        <label for="to_date" class="block">To Date</label>
+                        <input type="date" min="{{ $from_date }}" name="to_date" id="to_date"
+                            wire:model="to_date"
+                            class="appearance-none block w-full bg-gray-100 rounded-md p-2 leading-tight">
                     </div>
                 </div>
-                <div class="text-center text-sm py-0.5"><span class="text-red-500">{{ $err_msg }}</span></div>
-                <button class="bg-gray-700 hover:bg-black w-full mt-2 font-semibold rounded-sm text-white p-2"
+                <!-- Error Message -->
+                <div class="text-red-500 text-sm text-center py-1">{{ $err_msg }}</div>
+                <!-- Submit Button -->
+                <button class="mt-2 w-full bg-gray-700 hover:bg-black text-white font-semibold p-2 rounded-sm"
                     type="submit">Find a Bike</button>
             </div>
 
-            <div class="text-white">
-
-                <p class="font-semibold text-3xl"> Your best experiences</p>
-                <p class="font-normal text-md">Rent our best bike on ride</p>
-                <button class="bg-slate-600 px-3 py-1 rounded my-1" type="button">Discover</button>
-
+            <!-- Promotional Section -->
+            <div class="text-white w-1/3">
+                <h3 class="text-3xl font-semibold">Your Best Experiences</h3>
+                <p class="text-md font-normal">Rent our best bike for your ride</p>
+                <button class="mt-1 bg-slate-600 hover:bg-slate-700 px-3 py-1 rounded" type="button">Discover</button>
             </div>
-
         </div>
-
-
     </form>
 </div>

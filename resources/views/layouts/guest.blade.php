@@ -10,31 +10,28 @@
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet">
 
-    <!-- Scripts -->
+    <!-- Styles & Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans text-gray-900 antialiased">
+<body class="font-figtree text-gray-900 antialiased bg-gray-100">
     @include('layouts.navigation')
-    <div class="min-h-[98vh] flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
 
-
-
-        <div>
-            <p>{{ $companyname }}</p>
+    <main class="min-h-screen flex flex-col justify-center items-center pt-6">
+        <div class="text-center mb-4">
+            <p class="text-lg font-semibold">{{ $companyname }}</p>
         </div>
 
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+        <div class="w-full max-w-md p-6 bg-white shadow-lg rounded-lg">
             {{ $slot }}
         </div>
+    </main>
 
-
-    </div>
     @include('frontend.partials.footer')
 
-    @livewireScripts()
+    @livewireScripts
 </body>
 
 </html>
