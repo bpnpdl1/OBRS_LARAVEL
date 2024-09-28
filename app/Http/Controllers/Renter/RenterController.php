@@ -33,9 +33,9 @@ class RenterController extends Controller
     public function bikedetails(Request $request)
     {
         //
-        $rents = Rent::where('bike_id', '=', $request->bike_id);
+        $rents = Rent::where('bike_id', '=', $request->id);
         $rentcounts = $rents->count();
-        $bike = Bike::find($request->bike_id);
+        $bike = Bike::find($request->id);
         $recommendedbikes = Bike::where('id', '!=', $request->bike_id)->where('status', '=', 'Available')->orWhere('variant_id', '=', $bike->variant->id)->orWhere('cc', $bike->cc)->get();
 
         // dd(User::find(auth()->user()->id)->rent()->toArray());

@@ -20,7 +20,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        //
+
+     
         $brands = Brand::count();
         $variants = Variant::count();
         $bikes = Bike::count();

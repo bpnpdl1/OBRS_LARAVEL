@@ -19,15 +19,28 @@ class BikesController extends Controller
     {
         //
 
-
-
+      
 
         return view('admin.bikes.index');
+    }
+
+
+
+
+
+    public function getBikes()
+    {
+        $bikes = Bike::all();
+
+        return response()->json($bikes);
     }
 
     /**
      * Show the form for creating a new resource.
      */
+
+
+
     public function create()
     {
         //

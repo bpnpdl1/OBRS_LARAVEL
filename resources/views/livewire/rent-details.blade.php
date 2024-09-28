@@ -65,7 +65,17 @@
             </thead>
             <tbody class="bg-gray-100">
                 @forelse ($rents as $rent)
-                    <tr class="divide-x divide-gray-500 text-center">
+                    <tr
+                        class="divide-x divide-gray-500 text-center  
+
+                        @if ($rent->rental_status == 'Pending') bg-orange-200
+                    @elseif($rent->rental_status == 'Approved')
+                        bg-green-200
+                    @elseif($rent->rental_status == 'Marked_as_return')
+                        bg-yellow-200
+                    @elseif($rent->rental_status == 'Reject')
+                        bg-red-200 @endif                    
+                    ">
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $rent->bike->number_plate }}</td>
                         <td class="w-24">{{ $rent->rent_from_date }}</td>
@@ -91,6 +101,7 @@
                                     wire:click="cancelrent({{ $rent->id }})">Cancel
                                     Rent</button>
                             @endif
+
                         </td>
 
                     </tr>

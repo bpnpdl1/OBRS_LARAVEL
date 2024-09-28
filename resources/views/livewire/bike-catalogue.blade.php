@@ -79,17 +79,15 @@
                             <span class="text-gray-700 font-semibold">Bike cc:</span>
                             <span class="text-gray-800 ml-2">{{ $bike->cc }} cc</span>
                         </div>
-                        <form action="{{ route('renter.bikedetails') }}" method="POST">
-                            <div class="mt-2">
-                                @csrf
-                                <input type="hidden" name="bike_id" value="{{ $bike->bike_id }}">
-                                <button
-                                    class="inline-block  w-full  text-center bg-gray-600 hover:bg-black text-white font-semibold py-2 px-4 rounded"
-                                    type="submit">
-                                    Rent Bike
-                                </button>
-                            </div>
-                        </form>
+                        <input type="hidden" name="bike_id" value="{{ $bike->bike_id }}">
+
+
+                        <a href="{{ route('renter.bikedetails', $bike->id) }}"
+                            class="inline-block  w-full  text-center bg-gray-600 hover:bg-black text-white font-semibold py-2 px-4 rounded">
+                            Rent Bike
+                        </a>
+
+
                     </div>
                 </div>
             @endforeach

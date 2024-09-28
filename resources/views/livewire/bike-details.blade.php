@@ -154,14 +154,13 @@
                                                 <p>cc: {{ $rbike->cc }}</p>
                                             </li>
                                         </ul>
-                                        <form ction="{{ route('renter.bikedetails') }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="bike_id" value="{{ $rbike->id }}">
-                                            <button type="submit"
-                                                class="bg-slate-600 text-white hover:bg-black text-ellipsis min-w-full px-3 rounded-sm align-middle ">View
-                                                Details</button>
 
-                                        </form>
+                                        <button href="{{ route('renter.bikedetails', $rbike->id) }}"
+                                            class="bg-slate-600 text-white hover:bg-black text-ellipsis min-w-full px-3 rounded-sm align-middle ">View
+                                            Details</button>
+
+
+
                                     </div>
                                 </div>
                                 @php

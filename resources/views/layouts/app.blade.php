@@ -14,6 +14,8 @@
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
+    <!-- Add in the head of your document -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <!-- Scripts -->
@@ -79,7 +81,7 @@
         <div class="flex-1 text-black flex flex-col">
 
             <div class="h-16 bg-gray-100 shadow-md flex flex-row justify-end items-center p-8 space-x-4">
-                <livewire:user-menu />
+                <livewire:admin.admin-menu />
             </div>
             <div class="flex-1 p-6">
 
@@ -93,7 +95,8 @@
 
 
 
-
+    <!-- Add at the end of your body tag -->
+    {{-- <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script> --}}
     @livewireScripts()
 </body>
 

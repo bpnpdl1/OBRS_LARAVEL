@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Bike;
 use App\Models\Company;
+use App\Models\Rent;
+use App\Models\User;
+use App\Observers\AuditLogObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -35,5 +39,9 @@ class AppServiceProvider extends ServiceProvider
         //     view()->share('companyaddress', 'Pokhara');
         //     view()->share('companyphonenumber', '9840839292');
         // }
+
+    Bike::observe(AuditLogObserver::class);
+    User::observe(AuditLogObserver::class);
+    Rent::observe(AuditLogObserver::class);
     }
 }

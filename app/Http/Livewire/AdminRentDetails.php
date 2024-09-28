@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\AuditLog;
 use App\Models\Bike;
 use App\Models\Rent;
 use Livewire\Component;
@@ -32,6 +33,21 @@ class AdminRentDetails extends Component
     public $display = 'block';
 
     protected $rents;
+
+    public $ganttChart="hide";
+
+    public $rentchartid;
+
+    
+    public function showGanttChart($rentchartid){
+       
+        
+        $this->ganttChart="show";
+        $this->rentchartid=$rentchartid;
+
+        $this->emit('show-gannt-chart');
+    }
+    
 
     public function tooglerentdialog($id)
     {

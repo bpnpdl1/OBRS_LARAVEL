@@ -15,7 +15,6 @@ class UserMenu extends Component
             $result = Rent::select('rents.*', 'bikes.*', 'users.*')
                 ->join('users', 'users.id', '=', 'rents.user_id')
                 ->join('bikes', 'bikes.id', '=', 'rents.bike_id')
-                ->where('user_id', auth()->user()->id)
                 ->where('status', 'On Rent')
                 ->whereIn('rental_status', ['Pending', 'Approved'])
                 ->pluck('status');

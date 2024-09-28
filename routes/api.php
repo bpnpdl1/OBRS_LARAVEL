@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\BikesController;
+use App\Http\Controllers\LocationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,5 +19,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('bikes', [BikesController::class, 'getBikes'])->name('api.getBikes');
+
+Route::post('update-location', [LocationController::class, 'getLocation'])->name('api.getLocation');
 
 

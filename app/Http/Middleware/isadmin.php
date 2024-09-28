@@ -15,14 +15,12 @@ class isadmin
    */
   public function handle(Request $request, Closure $next): Response
   {
+      // Check if the user is authenticated using the 'admin' guard
+      if (auth()->guard('admin')->check()) {
+          return $next($request); // Proceed if authenticated
+      }
 
-    if (auth()->user()->role == 'admin') {
-      return $next($request);
-    } elseif (auth()->user()->role == 'renter') {
-
-      return redirect(route('home'));
-    } else {
-      return redirect(route('no-access'));
-    }
+      // If the user is not authenticated, redirect them to the admin login page
+      return redirect()->route('admin.login')->with('error', 'You are not authorized to access this page.');
   }
 }

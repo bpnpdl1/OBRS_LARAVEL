@@ -31,12 +31,9 @@ class AuthenticatedSessionController extends Controller
 
         if (auth()->user()->role == 'renter') {
 
+            session()->flash('success', 'Welcome back, ' . auth()->user()->name . '!');
             return redirect('/');
-        } elseif (auth()->user()->role == 'admin') {
-
-
-            return redirect()->intended(RouteServiceProvider::HOME);
-        }
+        } 
     }
 
     /**

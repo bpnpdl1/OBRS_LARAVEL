@@ -98,6 +98,8 @@
 
     </div>
 
+    {{-- <div id="map" style="height: 500px;"></div> --}}
+
 
 
 
@@ -105,17 +107,22 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js">
     </script>
 
+    <!-- Add at the end of your body tag -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var map = L.map('map').setView([20.5937, 78.9629], 6); // Example: Centered over India
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+        });
+
+
+
+
+
         var bikechart = document.getElementById("myChart");
-
-
-
-
-
-
-
-
-
 
         const ctx = document.getElementById("myChart");
 

@@ -52,10 +52,10 @@
             <!-- Register Button and Link to Login -->
             <div class="mt-6">
                 <input type="submit" value="Register"
-                    class="w-full bg-slate-700 hover:bg-slate-800 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-700 focus:ring-opacity-50">
+                    class="w-full px-4 py-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
                 <p class="text-sm font-thin text-center my-4">Already have an Account?</p>
                 <a href="{{ route('login') }}"
-                    class="w-full bg-slate-700 hover:bg-slate-800 text-white font-semibold py-2 px-4 rounded-md text-center">
+                    class="w-full px-4 py-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
                     Login on Existing Account
                 </a>
             </div>
