@@ -28,7 +28,6 @@ class Login extends Component
                 'email.exists' => 'This email does not exist in admin records'
             ]);
 
-     
     
             // Attempt to authenticate the admin user
             if (auth()->guard('admin')->attempt(['email' => $this->email, 'password' => $this->password])) {

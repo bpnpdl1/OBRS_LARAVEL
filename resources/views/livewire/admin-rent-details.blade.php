@@ -90,9 +90,7 @@
                                 <button class="bg-blue-500 text-xs text-white px-2 py-[3px] min-w-fit rounded block"
                                     title="Click here to switch payment mode to paid"
                                     wire:click="tooglerentdialog({{ $rent['id'] }})">Change status</button>
-                                <button wire:click="showGanttChart({{ $rent['id'] }})"
-                                    class="bg-green-500 text-xs text-white px-2 py-[3px] min-w-fit rounded block">Visualize
-                                </button>
+                               
 
                                 {{--                
                 @if ($rent['status'] == 'Payment Pending')

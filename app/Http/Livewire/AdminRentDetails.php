@@ -51,15 +51,21 @@ class AdminRentDetails extends Component
 
     public function tooglerentdialog($id)
     {
+        
 
         if ($this->rentdialog == 'hide') {
+           
             $this->rentdialog = 'show';
+
+           
 
             $this->rent1 = Rent::find($id);
             $this->rentalpayments = $this->rent1->toArray();
         } else {
             $this->rentdialog = 'hide';
         }
+
+        
     }
 
     public function saverentaltransaction()
