@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Livewire\Admin;
 
 use App\Models\AuditLog;
 use DateTime;
@@ -50,7 +50,7 @@ class RentChart extends Component
         })->toArray();
 
         // Emit the data to the frontend to update the chart
-        $this->dispatchBrowserEvent('show-gantt-chart', ['ganttData' => $this->ganttData]);
+        $this->dispatch('show-gantt-chart', ['ganttData' => $this->ganttData]);
     }
 
 

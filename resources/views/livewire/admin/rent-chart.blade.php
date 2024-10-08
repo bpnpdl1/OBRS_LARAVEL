@@ -6,7 +6,7 @@
     <div id="chart_div"></div>
 
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:init', function() {
             // Load Google Charts Library
             google.charts.load('current', {
                 'packages': ['gantt']

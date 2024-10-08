@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Bike;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
-use App\Http\Livewire\AnalyticsCharts;
+use App\Livewire\AnalyticsCharts;
 
 class VariantsChart extends Component
 {

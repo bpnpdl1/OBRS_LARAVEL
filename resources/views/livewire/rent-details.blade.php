@@ -9,7 +9,7 @@
                 <p class="text-lg font-thin">Bikes</p>
                 <hr>
                 @foreach ($bikes as $bike)
-                    <p><input type="checkbox" wire:model="bikesinputs" value="{{ $bike->id }}">
+                    <p><input type="checkbox" wire:model.live="bikesinputs" value="{{ $bike->id }}">
                         {{ $bike->number_plate }}</p>
                 @endforeach
             </div>
@@ -17,7 +17,7 @@
             <div>
                 <p class="text-lg font-thin">Rental Status</p>
                 <hr>
-                <select name="" id="" class=" rounded min-w-full" wire:model="rentalstatus">
+                <select name="" id="" class=" rounded min-w-full" wire:model.live="rentalstatus">
                     <option value="">Show all</option>
 
                     <option value="Pending">Pending</option>
@@ -31,7 +31,7 @@
                 <p class="text-md font-thin">Payment Method</p>
                 <hr>
 
-                <select name="" id="" class=" rounded min-w-full" wire:model="paymentmethod">
+                <select name="" id="" class=" rounded min-w-full" wire:model.live="paymentmethod">
                     <option value="">Show all</option>
                     <option value="Credit">Credit</option>
                     <option value="Cash">Cash</option>

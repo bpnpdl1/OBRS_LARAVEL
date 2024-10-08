@@ -1,11 +1,11 @@
 <div>
-    <form wire:submit.prevent="login">
+    <form wire:submit="login">
 
 
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" wire:model.blur="email" required autofocus
+            <x-text-input id="email" class="block mt-1 w-full" type="email" wire:model.live.blur="email" required autofocus
                 autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
@@ -15,7 +15,7 @@
             <x-input-label for="password" :value="__('Password')" />
 
             <x-text-input id="password" class="block mt-1 w-full" type="password" name="password"
-                wire:model.blur="password" required autocomplete="current-password" />
+                wire:model.live.blur="password" required autocomplete="current-password" />
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>

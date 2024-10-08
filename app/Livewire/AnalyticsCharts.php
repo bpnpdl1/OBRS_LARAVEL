@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use Livewire\Component;
-use App\Http\Livewire\VariantsChart;
+use App\Livewire\VariantsChart;
 use App\Models\Bike;
 use App\Models\Rent;
 use Carbon\Carbon;

@@ -85,12 +85,12 @@
                                 $status = str_replace('_', ' ', $rent->rental_status);
                             @endphp
                             <td class="text-center"> {{ $status }}</td>
-                            <td class="flex gap-2">
+                            <td>
 
-                                <button class="bg-blue-500 text-xs text-white px-2 py-[3px] min-w-fit rounded block"
+                                <button class="bg-blue-500 text-xs text-white px-2 py-[1px] min-w-fit rounded block"
                                     title="Click here to switch payment mode to paid"
                                     wire:click="tooglerentdialog({{ $rent['id'] }})">Change status</button>
-                               
+
 
                                 {{--                
                 @if ($rent['status'] == 'Payment Pending')
@@ -115,129 +115,61 @@
 
     </div>
 
-    <style>
-        .bar-pending {
-            fill: orange;
-        }
+  
 
-        .bar-approved {
-            fill: green;
-        }
-    </style>
+    @if($rentdialog === 'show')
+    
+    <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur-sm flex justify-center items-center">
+        <div class="bg-white rounded shadow-md shadow-slate-700 p-4 relative">
+            <!-- Close Button -->
+            <button wire:click="tooglerentdialog(2)" class="absolute top-2 right-2">
+                <i class="fa fa-times hover:bg-black hover:text-white p-1 rounded-full"></i>
+            </button>
 
-    @if ($ganttChart == 'show')
+            <!-- Modal Title -->
+            <h2 class="text-xl font-semibold mt-4 p-3">Rental Transaction Information</h2>
+            <hr class="h-0.5 bg-black">
 
-        <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur-sm flex flex-row justify-center items-center">
+            <!-- Rental Information -->
+            <p class="my-3">Rental Number: {{ $rent1->rental_number }}</p>
+            <p class="my-3">Rental Status: {{ $rent1->rental_status }}</p>
 
+            <!-- Form for Saving Transaction -->
+            <form wire:submit.prevent="saverentaltransaction">
+                <div class="flex flex-col gap-3 mt-4">
+                    <div class="grid grid-cols-2 gap-2">
+                        <!-- Payment Method and Rental Status -->
+                        <div class="flex flex-col gap-4">
+                            <label>Payment Method</label>
+                            <select name="payment_method" class="rounded scale-90" wire:model.lazy="rentalpayments.payment_method">
+                                <option value="Credit" @if ($rent1->payment_method == 'Credit') selected @endif>Credit</option>
+                                <option value="Cash on Hand" @if ($rent1->payment_method == 'Cash on Hand') selected @endif>Cash on Hand</option>
+                                <option value="Online" @if ($rent1->payment_method == 'Online') selected @endif>Online</option>
+                            </select>
 
-            <div class="bg-white rounded shadow-md shadow-slate-700 p-4 relative ">
+                            @if ($rentalpayments['payment_method'] != 'Credit')
+                                <label>Rental Status</label>
+                                <select name="rental_status" class="rounded scale-90" wire:model.lazy="rentalpayments.rental_status">
+                                    <option value="Pending" @if ($rent1->rental_status == 'Pending') selected @endif>Pending</option>
+                                    <option value="Approved" @if ($rent1->rental_status == 'Approved') selected @endif>Approved</option>
+                                    <option value="Marked_as_return" @if ($rent1->rental_status == 'Marked_as_return') selected @endif>Mark as Return</option>
+                                    <option value="Reject" @if ($rent1->rental_status == 'Reject') selected @endif>Reject</option>
+                                </select>
 
-
-                <div class="flex gap-2">
-                    <button wire:click="tooglerentdialog(2)"> <i
-                            class="fa fa-times hover:bg-black hover:text-white p-1 rounded-full absolute top-2 right-2"
-                            aria-hidden="true"></i>
-                    </button>
-                    <h2 class="text-xl font-semibold mt-4 p-3 rounded-sm"> Timeline of the Rents</h2>
-                </div>
-
-                <livewire:admin.rent-chart :rentchartid="$rentchartid" />
-
-
-            </div>
-
-            @if ($rentdialog == 'show')
-
-
-                <div
-                    class="fixed top-0 left-0 w-screen h-screen backdrop-blur-sm flex flex-row justify-center items-center">
-
-
-                    <div class="bg-white rounded shadow-md shadow-slate-700 p-4 relative {{ $display }}">
-                        <button wire:click="tooglerentdialog(2)"> <i
-                                class="fa fa-times hover:bg-black hover:text-white p-1 rounded-full absolute top-2 right-2"
-                                aria-hidden="true"></i>
-                        </button>
-
-                        <h2 class="text-xl font-semibold mt-4 p-3 rounded-sm">Rental Transaction Information</h2>
-                        <hr class="h-0.5 bg-black">
-                        <p class="my-3">Rental Number: {{ $rent1->rental_number }}</p>
-                        <p class="my-3">Rental Status: {{ $rent1->rental_status }}</p>
-                        <form wire:submit.prevent="saverentaltransaction">
-
-                            <div class="flex flex-col gap-3 mt-4">
-
-                                <div class=" grid grid-cols-2 content-center items-center gap-2">
-
-                                    <div class="flex flex-col align-middle gap-4 justify-center">
-                                        <label for="">Payment Method</label>
-                                        @if ($rentalpayments['payment_method'] != 'Credit')
-                                            <label for="">Rental Status</label>
-                                            <label for="" class=" {{ $refundclass }} ">Refund Amount <br>
-                                                <center><small>(Optional)</small></center>
-                                            </label>
-                                        @endif
-                                    </div>
-                                    <div class="flex flex-col justify-center gap-2">
-                                        <select name="" id="" class="rounded scale-90"
-                                            wire:model.lazy="rentalpayments.payment_method">
-
-                                            {{-- {{-- <option @if ($rent1->status == 'Payment Pending') selected @endif   value="Payment Pending">Payment Pending</option> --}}
-                                            <option @if ($rent1->payment_method == 'Credit') selected @endif value="Credit">
-                                                Credit
-                                            </option>
-                                            <option @if ($rent1->payment_method == 'Cash on Hand') selected @endif
-                                                value="Cash on Hand">
-                                                Cash
-                                                on
-                                                Hand</option>
-                                            <option @if ($rent1->payment_method == 'Online') selected @endif value="Online">
-                                                Online
-                                            </option>
-                                        </select>
-
-                                        @if ($rentalpayments['payment_method'] != 'Credit')
-                                            <select name="" id="" class="rounded scale-90"
-                                                wire:model.lazy="rentalpayments.rental_status">
-                                                <option @if ($rent1->rental_status == 'Pending') selected @endif
-                                                    value="Pending">
-                                                    Pending</option>
-                                                <option @if ($rent1->rental_status == 'Approved') selected @endif
-                                                    value="Approved">
-                                                    Approve on Rent</option>
-                                                <option @if ($rent1->rental_status == 'Marked_as_return') selected @endif
-                                                    value="Marked_as_return">Mark as Return</option>
-                                                <option @if ($rent1->rental_status == 'Reject') selected @endif
-                                                    value="Reject">
-                                                    Reject
-                                                </option>
-                                            </select>
-                                            <input type="number" placeholder="Refund Amount"
-                                                wire:model="rentalpayments.refund"
-                                                class="rounded scale-90 {{ $refundclass }}">
-                                        @endif
-                                    </div>
-
-                                </div>
-
-
-                                <button class="text-white py-1 rounded bg-black" wire:loading.attr="disabled">
-                                    <i class="animate-spin fa fa-spinner" aria-hidden="true" wire:loading></i>
-
-                                    Save
-                                </button>
-
-
-                            </div>
-
-                        </form>
+                                <label for="refund_amount" class="{{ $refundclass }}">Refund Amount (Optional)</label>
+                                <input type="number" id="refund_amount" placeholder="Refund Amount" wire:model="rentalpayments.refund" class="rounded scale-90 {{ $refundclass }}">
+                            @endif
+                        </div>
                     </div>
 
+                    <!-- Submit Button -->
+                    <button class="text-white py-1 rounded bg-black" wire:loading.attr="disabled">
+                        <i class="fa fa-spinner animate-spin" wire:loading></i> Save
+                    </button>
                 </div>
-            @endif
+            </form>
         </div>
-
-    @endif
-
+    </div>
+@endif
 
 </div>

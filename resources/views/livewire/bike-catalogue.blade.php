@@ -23,7 +23,7 @@
                     <p class="font-medium">Prices</p>
 
                     <select name="" id="" class="w-full rounded-sm text-center py-2"
-                        wire:model="priceorder" wire:onchange="orderprice('{{ $priceorder }}')">
+                        wire:model.live="priceorder" wire:onchange="orderprice('{{ $priceorder }}')">
 
                         <option value="asc">Low to High</option>
                         <option value="desc">High to Low</option>
@@ -36,7 +36,7 @@
                     <p class="font-medium">Brands</p>
                     <ul>
                         @foreach ($brands as $brand)
-                            <li class="px-6"> <input type="checkbox" wire:model="brandInputs"
+                            <li class="px-6"> <input type="checkbox" wire:model.live="brandInputs"
                                     value="{{ $brand->brand_name }}"> {{ $brand->brand_name }}</li>
                         @endforeach
                     </ul>
@@ -45,7 +45,7 @@
                     <p class="font-medium">cc</p>
 
                     <input type="range" name="" id="cc" min="{{ $min_cc }}"
-                        max="{{ $max_cc }}" onchange="showvalue()" wire:model="ccvalue">
+                        max="{{ $max_cc }}" onchange="showvalue()" wire:model.live="ccvalue">
                     @if ($ccvalue)
                         <p>Bike cc upto: {{ $ccvalue }} cc</p>
                     @endif

@@ -8,7 +8,7 @@
 <div class="fixed w-screen h-screen top-0 left-0 justify-center flex flex-row items-center backdrop-blur-lg">
 
 
-<form wire:submit.prevent="submit" method="POST" class="w-[50rem] relative bg-white rounded">
+<form wire:submit="submit" method="POST" class="w-[50rem] relative bg-white rounded">
     <button wire:click="toggleeditcompany" type="button" class=" absolute top-2 right-2"> <i class="fa fa-times hover:bg-black hover:text-white rounded-full p-1" aria-hidden="true" ></i>
    </button>
     <legend class="p-3 m-auto text-center font-semibold text-lg">Company Details</legend>
@@ -18,21 +18,21 @@
 
      <div class="flex flex-col gap-2">
       <label for="" class="text-md">Company name</label>
-      <input type="text" class="rounded" placeholder="Enter Your company name" wire:model="name" value="{{ $name }}">
+      <input type="text" class="rounded" placeholder="Enter Your company name" wire:model.live="name" value="{{ $name }}">
       @error('name')
           <span class="text-red-500 text-sm">{{ $message }}</span>
       @enderror
      </div>
        <div class="flex flex-col gap-2">
       <label for="" class="text-md">Company Address</label>
-      <input type="text" class="rounded" placeholder="Enter Your company Address" wire:model="address" value="{{ $address }}">
+      <input type="text" class="rounded" placeholder="Enter Your company Address" wire:model.live="address" value="{{ $address }}">
        @error('address')
           <span class="text-red-500 text-sm">{{ $message }}</span>
       @enderror
      </div>
        <div class="flex flex-col gap-2">
       <label for="" class="text-md">Company Phone Number</label>
-      <input type="number" class="rounded" placeholder="Enter Your company phone number" wire:model="phone_number" value="{{ $phone_number }}">
+      <input type="number" class="rounded" placeholder="Enter Your company phone number" wire:model.live="phone_number" value="{{ $phone_number }}">
        @error('phone_number')
           <span class="text-red-500 text-sm">{{ $message }}</span>
       @enderror

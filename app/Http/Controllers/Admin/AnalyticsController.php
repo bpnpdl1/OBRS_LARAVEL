@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Livewire\Bikes;
+use App\Livewire\Bikes;
 use App\Models\Bike;
 use App\Models\Rent;
 use Illuminate\Http\Request;

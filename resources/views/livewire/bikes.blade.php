@@ -11,7 +11,7 @@
             <div class="flex flex-row justify-between items-center">
                 <div>
 
-                    <p>Show <select name="" id="" class="text-sm m-2" wire:model="items">
+                    <p>Show <select name="" id="" class="text-sm m-2" wire:model.live="items">
                             <option value="10">10</option>
                             <option value="15">15</option>
                             <option value="20">20</option>
@@ -22,7 +22,7 @@
                 <div class="flex gap-2 items-center">
                     <p>Select Status</p>
                     <select name="" id="" class="rounded bg-gray-300 flex items-center py-1"
-                        wire:model="rentalstatus">
+                        wire:model.live="rentalstatus">
                         <option disabled>--select--</option>
                         <option value="">Show all</option>
                         <option value="Unavalable">On Rent</option>

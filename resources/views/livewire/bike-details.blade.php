@@ -27,13 +27,13 @@
                             <div>
                                 <p>From date</p>
                                 <input type="date" min="{{ date('Y-m-d') }}" name="" id=""
-                                    class="w-[100%] bg-slate-200 rounded" wire:model="from_date"
+                                    class="w-[100%] bg-slate-200 rounded" wire:model.live="from_date"
                                     @if (session()->get('from_date')) value="{{ $from_date }}" readonly @endif>
                             </div>
                             <div>
                                 <p>To date</p>
                                 <input type="date" name="" id=""
-                                    class="w-[100%] bg-slate-200 rounded" wire:model="to_date"
+                                    class="w-[100%] bg-slate-200 rounded" wire:model.live="to_date"
                                     @if (session()->get('to_date')) value="{{ $to_date }}" readonly @endif>
                             </div>
                         </div>

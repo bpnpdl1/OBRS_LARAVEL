@@ -1,7 +1,7 @@
 <div>
     {{-- Success is as dangerous as failure. --}}
 
-    <form wire:submit.prevent="submit" method="POST">
+    <form wire:submit="submit" method="POST">
         <div class="flex justify-start items-center gap-10 bg-slate-500 p-10 h-96" id="divCover">
             <!-- Date selection form -->
             <div class="bg-slate-100 rounded-md p-5 w-1/3">
@@ -10,14 +10,14 @@
                     <!-- From Date -->
                     <div>
                         <label for="from_date" class="block">From Date</label>
-                        <input type="date" min="{{ $from_min_date }}" wire:model="from_date" name="from_date"
+                        <input type="date" min="{{ $from_min_date }}" wire:model.live="from_date" name="from_date"
                             class="appearance-none block w-full bg-gray-100 rounded-md p-2 leading-tight">
                     </div>
                     <!-- To Date -->
                     <div>
                         <label for="to_date" class="block">To Date</label>
                         <input type="date" min="{{ $from_date }}" name="to_date" id="to_date"
-                            wire:model="to_date"
+                            wire:model.live="to_date"
                             class="appearance-none block w-full bg-gray-100 rounded-md p-2 leading-tight">
                     </div>
                 </div>
