@@ -41,7 +41,7 @@
                         @endforeach
                     </ul>
                 </div>
-                <div class="w-60 flex flex-col pb-3">
+                {{-- <div class="w-60 flex flex-col pb-3">
                     <p class="font-medium">cc</p>
 
                     <input type="range" name="" id="cc" min="{{ $min_cc }}"
@@ -49,7 +49,7 @@
                     @if ($ccvalue)
                         <p>Bike cc upto: {{ $ccvalue }} cc</p>
                     @endif
-                </div>
+                </div> --}}
 
             </div>
 

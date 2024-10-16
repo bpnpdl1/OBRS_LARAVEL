@@ -3,135 +3,158 @@
 namespace App\Livewire;
 
 use App\Models\Bike;
-use App\Models\Rent;
 use Carbon\Carbon;
+use Livewire\Attributes\Url;
 use Livewire\Component;
+use Livewire\WithPagination;
+use Illuminate\Pagination\LengthAwarePaginator;
 
-class BikeDetails extends Component
+class BikeCatalogue extends Component
 {
-    public $bike;
+    use WithPagination;
 
-    public $rentcounts;
+    public $brands;
+    public $priceorder;
+    public $ccvalue;
+    public $min_cc;
+    public $max_cc;
 
-    public $checkout = 'hide';
-
-    public $recommendedbikes;
+    #[Url('brandInputs.*')]
+    public $brandInputs = [];
 
     public $from_date;
-
     public $to_date;
-
-    public $rentaldays;
-
-    public $total_rental_price;
-
-    public $toogledialog = 'hide';
-
-    public $dateerror;
-
-    public $image_url;
-
-    public $billbookdisplay = 'hidden';
-
-    public $min_from_date;
-
-    public $rentdialog = 'hide';
 
     public function mount()
     {
+        $this->min_cc = Bike::min('cc');
+        $this->max_cc = Bike::max('cc');
 
-        $bike = Bike::find($this->bike['id']);
-        $this->image_url = 'storage/bike_images/'.$bike['billbook'];
+        $from_date = Carbon::parse(session()->get('from_date'));
+        $to_date = Carbon::parse(session()->get('to_date'));
 
-        $this->from_date = Carbon::parse(session()->get('from_date'));
-        $this->to_date = Carbon::parse(session()->get('to_date'));
-
-        $rentaldays = $this->from_date->diffInDays($this->to_date);
-
-        $this->rentaldays = $rentaldays;
-
-        $this->from_date = $this->from_date->format('Y-m-d');
-        $this->to_date = $this->to_date->format('Y-m-d');
-
-        $this->total_rental_price = $rentaldays * $this->bike->variant->variant_rental_price;
-    }
-
-    public function billbookdialog()
-    {
-        if ($this->billbookdisplay == 'fixed') {
-            $this->billbookdisplay = 'hidden';
-        } elseif ($this->billbookdisplay == 'hidden') {
-            $this->billbookdisplay = 'fixed';
-        }
-    }
-
-    public function updated()
-    {
-        $this->calculaterentaldays();
-    }
-
-    public function calculaterentaldays()
-    {
-        $from_date = Carbon::parse($this->from_date);
-        $to_date = Carbon::parse($this->to_date);
-
-        $rentaldays = $from_date->diffInDays($to_date);
-
-        $this->rentaldays = $rentaldays;
-
-        $this->total_rental_price = $rentaldays * $this->bike->variant->variant_rental_price;
-    }
-
-    public function checkout()
-    {
-        $this->checkout = 'show';
-    }
-
-    public function rentbike()
-    {
-
-        $rentbike = [
-            'rent_from_date' => $this->from_date,
-            'rent_to_date' => $this->to_date,
-            'rental_status' => 'Pending',
-            'payment_method' => 'Credit',
-            'total_rental_price' => $this->total_rental_price,
-            'bike_id' => $this->bike->id,
-            'user_id' => auth()->user()->id,
-        ];
-
-        $rent = Rent::create($rentbike);
-
-        $bike['status'] = 'On Rent';
-        Bike::find($this->bike->id)->update($bike);
-        $msg = 'Bike Added on rent Successfully. Please come with rental ticket to take bike on rent';
-
-        return redirect(route('renter.rent.details'))->with('success', $msg);
+        $this->from_date = $from_date->format('M-d');
+        $this->to_date = $to_date->format('M-d');
     }
 
     public function render()
     {
-        return view('livewire.bike-details');
+        // Fetching bikes from the database
+        $bikes = Bike::select('variants.*', 'bikes.*', 'bikes.id AS bike_id', 'brands.brand_name AS brand_name')
+            ->join('variants', 'variants.id', '=', 'bikes.variant_id')
+            ->leftJoin('brands', 'brands.id', '=', 'variants.id')
+            ->where('bikes.status', '=', 'Available')
+            ->when($this->brandInputs, function ($query) {
+                $query->whereIn('brands.brand_name', $this->brandInputs);
+            })
+            ->get();
+
+        // Apply filtering by CC using binary search algorithm
+        if ($this->ccvalue) {
+            $bikes = $this->filterBikesByCC($bikes, $this->ccvalue);
+        }
+
+        // Apply sorting by price using QuickSort algorithm
+        if ($this->priceorder) {
+            $bikes = $this->sortBikesByPrice($bikes, $this->priceorder);
+        }
+
+        // Manually paginate the collection
+        $bikes = $this->paginate($bikes, 10);
+
+        return view('livewire.bike-catalogue', compact('bikes'));
     }
 
-    public function toogle()
+    /**
+     * QuickSort algorithm for sorting bikes by price.
+     */
+    private function sortBikesByPrice($bikes, $order)
     {
+        $bikesArray = $bikes->toArray();
+        $this->quickSort($bikesArray, 0, count($bikesArray) - 1);
 
-        if ($this->from_date == '' || $this->to_date == '') {
-            $this->dateerror = 'Please select the rental dates';
-        } elseif ($this->from_date >= $this->to_date) {
-            $this->dateerror = 'From date must be smaller than to date';
-        } else {
-            $this->dateerror = '';
+        if ($order === 'desc') {
+            $bikesArray = array_reverse($bikesArray);
         }
 
-        if ($this->dateerror != '') {
-        } else {
-            if ($this->toogledialog == 'show') {
-                $this->toogledialog = 'hide';
-            } else {
-                $this->toogledialog = 'show';
+        return collect($bikesArray);
+    }
+
+    private function quickSort(&$bikes, $low, $high)
+    {
+        if ($low < $high) {
+            $pi = $this->partition($bikes, $low, $high);
+
+            $this->quickSort($bikes, $low, $pi - 1);
+            $this->quickSort($bikes, $pi + 1, $high);
+        }
+    }
+
+    private function partition(&$bikes, $low, $high)
+    {
+        $pivot = $bikes[$high]['variant_rental_price'];
+        $i = ($low - 1);
+
+        for ($j = $low; $j < $high; $j++) {
+            if ($bikes[$j]['variant_rental_price'] <= $pivot) {
+                $i++;
+                $temp = $bikes[$i];
+                $bikes[$i] = $bikes[$j];
+                $bikes[$j] = $temp;
             }
         }
+
+        $temp = $bikes[$i + 1];
+        $bikes[$i + 1] = $bikes[$high];
+        $bikes[$high] = $temp;
+
+        return $i + 1;
+    }
+
+    /**
+     * Binary search algorithm for filtering bikes by CC value.
+     */
+    private function filterBikesByCC($bikes, $ccValue)
+    {
+        $bikesArray = $bikes->toArray();
+        $filtered = [];
+
+        // Use binary search to find bikes with CC <= $ccValue
+        $low = 0;
+        $high = count($bikesArray) - 1;
+
+        while ($low <= $high) {
+            $mid = floor(($low + $high) / 2);
+
+            if ($bikesArray[$mid]['cc'] <= $ccValue) {
+                $filtered[] = $bikesArray[$mid];
+                $low = $mid + 1; // Move to the right half
+            } else {
+                $high = $mid - 1; // Move to the left half
+            }
+        }
+
+        return collect($filtered);
+    }
+
+    /**
+     * Manually paginate a collection.
+     */
+    private function paginate($items, $perPage)
+    {
+        $page = request()->get('page', 1);
+        $total = $items->count();
+        $results = $items->forPage($page, $perPage)->values();
+
+        return new LengthAwarePaginator($results, $total, $perPage, $page, [
+            'path' => request()->url(),
+            'query' => request()->query(),
+        ]);
+    }
+
+    public function rentbike($id)
+    {
+        $bike = Bike::find($id);
+        return redirect(route('renter.bikedetails'))->with(compact('bike'));
     }
 }

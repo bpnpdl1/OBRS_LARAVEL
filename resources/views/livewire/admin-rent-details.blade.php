@@ -137,7 +137,7 @@
             <!-- Form for Saving Transaction -->
             <form wire:submit.prevent="saverentaltransaction">
                 <div class="flex flex-col gap-3 mt-4">
-                    <div class="grid grid-cols-2 gap-2">
+                    <div class="grid grid-cols-1 gap-2">
                         <!-- Payment Method and Rental Status -->
                         <div class="flex flex-col gap-4">
                             <label>Payment Method</label>
