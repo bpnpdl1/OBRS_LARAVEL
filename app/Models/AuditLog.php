@@ -16,4 +16,11 @@ class AuditLog extends Model
         'old_values' => 'array',
         'new_values' => 'array',
     ];
+
+    public function rentalStatusLog($id)
+    {
+        $logs= $this->where('table_name', 'rents')->where('record_id', $id)->select('old_values', 'new_values')->get();
+
+        return $logs;
+    }
 }

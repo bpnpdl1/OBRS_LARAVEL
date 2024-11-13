@@ -11,7 +11,7 @@
                 <div class="flex flex-row justify-center items-center gap-4 m-5 shadow-sm shadow-gray-800 rounded-md py-8">
 
                     <div>
-                        <img src="{{ 'storage/variant_images/' . $bike->variant->variant_image }}" alt="" class="w-[350px] h-[300px] object-cover">
+                        <img src="{{ asset('storage/variant_images/' . $bike->variant->variant_image) }}" alt="" class="w-[350px] h-[300px] object-cover">
 
                         <div class="flex flex-row gap-4 justify-center">
                             <div>

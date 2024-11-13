@@ -21,12 +21,19 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+
     <script src="https://kit.fontawesome.com/a21da4aff9.js" crossorigin="anonymous"></script>
 
     {{-- Datatables --}}
     <script src="{{ asset('datatable/jquery-3.6.0.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('datatable/datatables.css') }}">
     <script src="{{ asset('datatable/datatables.js') }}"></script>
+
+    <!-- Include Frappe Gantt CSS and JS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/frappe-gantt/0.5.0/frappe-gantt.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/frappe-gantt/0.5.0/frappe-gantt.js"></script>
+
+
 
     <style type="text/css">
         #ui-datepicker-div>div {
@@ -44,6 +51,7 @@
         }
     </style>
     @livewireStyles()
+    
 </head>
 
 <body class="font-sans antialiased">
@@ -97,7 +105,10 @@
 
     <!-- Add at the end of your body tag -->
     {{-- <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script> --}}
+  
     @livewireScripts()
+    @stack('scripts')
+   
 </body>
 
 </html>
